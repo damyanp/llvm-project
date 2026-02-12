@@ -15661,12 +15661,25 @@ Decl *Sema::ActOnParamDeclarator(Scope *S, Declarator &D,
     }
   }
 
-  // Incomplete resource arrays are not allowed as function parameters in HLSL
-  if (getLangOpts().HLSL && parmDeclType->isIncompleteArrayType() &&
-      parmDeclType->isHLSLResourceRecordArray()) {
-    Diag(D.getIdentifierLoc(),
-         diag::err_hlsl_incomplete_resource_array_in_function_param);
-    D.setInvalidType(true);
+  // Incomplete (unbounded) resource arrays are not allowed as function
+  // parameters in HLSL. We need to ensure the element type is complete before
+  // we can check whether it is an HLSL resource type, since template
+  // specializations may not yet be instantiated at this point.
+  if (getLangOpts().HLSL) {
+    QualType CheckTy = parmDeclType;
+    if (const auto *DT = dyn_cast<DecayedType>(CheckTy))
+      CheckTy = DT->getOriginalType();
+    if (const auto *IAT = dyn_cast<IncompleteArrayType>(CheckTy)) {
+      QualType ElemTy = IAT->getElementType();
+      if (!ElemTy->isDependentType() &&
+          !RequireCompleteType(D.getIdentifierLoc(), ElemTy,
+                               diag::err_typecheck_decl_incomplete_type) &&
+          CheckTy->isHLSLResourceRecordArray()) {
+        Diag(D.getIdentifierLoc(),
+             diag::err_hlsl_incomplete_resource_array_in_function_param);
+        D.setInvalidType(true);
+      }
+    }
   }
 
   // Temporarily put parameter variables in the translation unit, not
