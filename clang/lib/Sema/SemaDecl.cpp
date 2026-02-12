@@ -15557,29 +15557,6 @@ void Sema::warnOnCTypeHiddenInCPlusPlus(const NamedDecl *D) {
   }
 }
 
-// Helper function to check if a type contains incomplete (unbounded) resource
-// arrays, either directly or within struct members (recursively).
-static bool containsIncompleteHLSLResourceArray(const Type *Ty) {
-  if (!Ty)
-    return false;
-
-  Ty = Ty->getUnqualifiedDesugaredType();
-
-  // Check if this type itself is an incomplete resource array
-  if (Ty->isIncompleteArrayType() && Ty->isHLSLResourceRecordArray())
-    return true;
-
-  // Check if this is a struct/class that contains incomplete resource arrays
-  if (const auto *RD = Ty->getAsCXXRecordDecl()) {
-    for (const auto *Field : RD->fields()) {
-      if (containsIncompleteHLSLResourceArray(Field->getType().getTypePtr()))
-        return true;
-    }
-  }
-
-  return false;
-}
-
 static void CheckExplicitObjectParameter(Sema &S, ParmVarDecl *P,
                                          SourceLocation ExplicitThisLoc) {
   if (!ExplicitThisLoc.isValid())
@@ -15685,13 +15662,24 @@ Decl *Sema::ActOnParamDeclarator(Scope *S, Declarator &D,
   }
 
   // Incomplete (unbounded) resource arrays are not allowed as function
-  // parameters in HLSL. This includes:
-  // - Direct incomplete resource array parameters (e.g., RWByteAddressBuffer bf[])
-  // - Struct types containing incomplete resource arrays as members
-  if (getLangOpts().HLSL && containsIncompleteHLSLResourceArray(parmDeclType.getTypePtr())) {
-    Diag(D.getIdentifierLoc(),
-         diag::err_hlsl_incomplete_resource_array_in_function_param);
-    D.setInvalidType(true);
+  // parameters in HLSL. We need to ensure the element type is complete before
+  // we can check whether it is an HLSL resource type, since template
+  // specializations may not yet be instantiated at this point.
+  if (getLangOpts().HLSL) {
+    QualType CheckTy = parmDeclType;
+    if (const auto *DT = dyn_cast<DecayedType>(CheckTy))
+      CheckTy = DT->getOriginalType();
+    if (const auto *IAT = dyn_cast<IncompleteArrayType>(CheckTy)) {
+      QualType ElemTy = IAT->getElementType();
+      if (!ElemTy->isDependentType() &&
+          !RequireCompleteType(D.getIdentifierLoc(), ElemTy,
+                               diag::err_typecheck_decl_incomplete_type) &&
+          CheckTy->isHLSLResourceRecordArray()) {
+        Diag(D.getIdentifierLoc(),
+             diag::err_hlsl_incomplete_resource_array_in_function_param);
+        D.setInvalidType(true);
+      }
+    }
   }
 
   // Temporarily put parameter variables in the translation unit, not
