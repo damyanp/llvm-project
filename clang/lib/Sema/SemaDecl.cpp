@@ -15557,22 +15557,22 @@ void Sema::warnOnCTypeHiddenInCPlusPlus(const NamedDecl *D) {
   }
 }
 
-// Helper function to check if a type contains resource arrays, either directly
-// or within struct members (recursively).
-static bool containsHLSLResourceArray(const Type *Ty) {
+// Helper function to check if a type contains incomplete (unbounded) resource
+// arrays, either directly or within struct members (recursively).
+static bool containsIncompleteHLSLResourceArray(const Type *Ty) {
   if (!Ty)
     return false;
 
   Ty = Ty->getUnqualifiedDesugaredType();
 
-  // Check if this type itself is a resource array
-  if (Ty->isHLSLResourceRecordArray())
+  // Check if this type itself is an incomplete resource array
+  if (Ty->isIncompleteArrayType() && Ty->isHLSLResourceRecordArray())
     return true;
 
-  // Check if this is a struct/class that contains resource arrays
+  // Check if this is a struct/class that contains incomplete resource arrays
   if (const auto *RD = Ty->getAsCXXRecordDecl()) {
     for (const auto *Field : RD->fields()) {
-      if (containsHLSLResourceArray(Field->getType().getTypePtr()))
+      if (containsIncompleteHLSLResourceArray(Field->getType().getTypePtr()))
         return true;
     }
   }
@@ -15684,13 +15684,13 @@ Decl *Sema::ActOnParamDeclarator(Scope *S, Declarator &D,
     }
   }
 
-  // Resource arrays are not allowed as function parameters in HLSL.
-  // This includes:
-  // - Direct resource array parameters (bounded or unbounded)
-  // - Struct types containing resource arrays as members
-  if (getLangOpts().HLSL && containsHLSLResourceArray(parmDeclType.getTypePtr())) {
+  // Incomplete (unbounded) resource arrays are not allowed as function
+  // parameters in HLSL. This includes:
+  // - Direct incomplete resource array parameters (e.g., RWByteAddressBuffer bf[])
+  // - Struct types containing incomplete resource arrays as members
+  if (getLangOpts().HLSL && containsIncompleteHLSLResourceArray(parmDeclType.getTypePtr())) {
     Diag(D.getIdentifierLoc(),
-         diag::err_hlsl_resource_array_in_function_param);
+         diag::err_hlsl_incomplete_resource_array_in_function_param);
     D.setInvalidType(true);
   }
 
