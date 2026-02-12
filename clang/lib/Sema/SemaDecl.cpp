@@ -15557,6 +15557,29 @@ void Sema::warnOnCTypeHiddenInCPlusPlus(const NamedDecl *D) {
   }
 }
 
+// Helper function to check if a type contains resource arrays, either directly
+// or within struct members (recursively).
+static bool containsHLSLResourceArray(const Type *Ty) {
+  if (!Ty)
+    return false;
+
+  Ty = Ty->getUnqualifiedDesugaredType();
+
+  // Check if this type itself is a resource array
+  if (Ty->isHLSLResourceRecordArray())
+    return true;
+
+  // Check if this is a struct/class that contains resource arrays
+  if (const auto *RD = Ty->getAsCXXRecordDecl()) {
+    for (const auto *Field : RD->fields()) {
+      if (containsHLSLResourceArray(Field->getType().getTypePtr()))
+        return true;
+    }
+  }
+
+  return false;
+}
+
 static void CheckExplicitObjectParameter(Sema &S, ParmVarDecl *P,
                                          SourceLocation ExplicitThisLoc) {
   if (!ExplicitThisLoc.isValid())
@@ -15661,11 +15684,13 @@ Decl *Sema::ActOnParamDeclarator(Scope *S, Declarator &D,
     }
   }
 
-  // Incomplete resource arrays are not allowed as function parameters in HLSL
-  if (getLangOpts().HLSL && parmDeclType->isIncompleteArrayType() &&
-      parmDeclType->isHLSLResourceRecordArray()) {
+  // Resource arrays are not allowed as function parameters in HLSL.
+  // This includes:
+  // - Direct resource array parameters (bounded or unbounded)
+  // - Struct types containing resource arrays as members
+  if (getLangOpts().HLSL && containsHLSLResourceArray(parmDeclType.getTypePtr())) {
     Diag(D.getIdentifierLoc(),
-         diag::err_hlsl_incomplete_resource_array_in_function_param);
+         diag::err_hlsl_resource_array_in_function_param);
     D.setInvalidType(true);
   }
 
