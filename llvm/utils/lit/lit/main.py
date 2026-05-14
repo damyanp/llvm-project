@@ -93,6 +93,21 @@ def main(builtin_params={}):
     if opts.filterFailed:
         selected_tests = [t for t in selected_tests if t.previous_failure]
 
+    if opts.requires:
+        selected_tests = [
+            t for t in selected_tests if t.matchesRequiresFilter(opts.requires)
+        ]
+        # Make the requested features available so the selected tests are not
+        # then reported as UNSUPPORTED by the normal REQUIRES check.
+        seen_configs = set()
+        for t in selected_tests:
+            cfg = t.config
+            if id(cfg) in seen_configs:
+                continue
+            seen_configs.add(id(cfg))
+            for f in opts.requires:
+                cfg.available_features.add(f)
+
     if not selected_tests:
         sys.stderr.write(
             "error: filter did not match any tests "

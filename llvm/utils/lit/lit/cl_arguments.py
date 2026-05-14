@@ -430,6 +430,17 @@ def parse_args():
         action="store_true",
     )
     selection_group.add_argument(
+        "--requires",
+        metavar="FEATURES",
+        type=_comma_feature_list,
+        help="Only run tests whose REQUIRES/UNSUPPORTED clauses are satisfied "
+        "by exactly the given comma-separated set of features. Tests with no "
+        "REQUIRES line, or whose REQUIRES is not satisfied by these features, "
+        "or whose UNSUPPORTED matches these features, are silently dropped "
+        "(not reported as UNSUPPORTED).",
+        default=_comma_feature_list(os.environ.get("LIT_REQUIRES", "")),
+    )
+    selection_group.add_argument(
         "--xfail",
         metavar="LIST",
         type=_semicolon_list,
@@ -556,6 +567,12 @@ def _case_insensitive_regex(arg):
 
 def _semicolon_list(arg):
     return arg.split(";")
+
+
+def _comma_feature_list(arg):
+    if not arg:
+        return []
+    return [f.strip() for f in arg.split(",") if f.strip()]
 
 
 def _error(desc, *args):

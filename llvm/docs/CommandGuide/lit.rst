@@ -319,6 +319,22 @@ The timing data is stored in the `test_exec_root` in a file named
   Run only those tests that previously failed. Tests that have been newly added
   but not yet run are not included.
 
+.. option:: --requires FEATURES
+
+  Run only those tests whose ``REQUIRES:`` and ``UNSUPPORTED:`` clauses are
+  satisfied by exactly the comma-separated list of feature names in
+  ``FEATURES``. A test is selected only if it has at least one ``REQUIRES:``
+  line, every ``REQUIRES:`` boolean expression evaluates to true under
+  ``FEATURES``, and no ``UNSUPPORTED:`` boolean expression evaluates to true
+  under ``FEATURES``. All other tests (including tests with no ``REQUIRES:``
+  line) are silently dropped from the run rather than reported as
+  ``UNSUPPORTED``. The environment variable ``LIT_REQUIRES`` can also be used
+  in place of this option.
+
+  Tests using formats that do not parse ``REQUIRES:`` / ``UNSUPPORTED:``
+  keywords from the test source (for example ``GoogleTest``) cannot be matched
+  and are dropped when this option is active.
+
 .. option:: --xfail LIST
 
   Treat those tests whose name is in the semicolon separated list ``LIST`` as

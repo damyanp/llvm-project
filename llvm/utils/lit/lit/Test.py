@@ -448,3 +448,45 @@ class Test:
         )
         matchExpressions = set(filter(BooleanExpression.isMatchExpression, tokens))
         return matchExpressions
+
+    def matchesRequiresFilter(self, features):
+        """matchesRequiresFilter(features) -> bool
+
+        Returns True if this test should be selected by a `--requires=...`
+        filter restricted to the given iterable of feature names.
+
+        A test matches iff:
+          * It has at least one REQUIRES: line, AND
+          * Every REQUIRES: expression evaluates to True under `features`, AND
+          * No UNSUPPORTED: expression evaluates to True under `features`.
+
+        Tests whose source cannot be parsed (e.g. non-shell test formats, or
+        files with malformed keyword expressions) do not match.
+        """
+        import lit.TestRunner
+
+        try:
+            parsed = lit.TestRunner._parseKeywords(
+                self.getSourcePath(), require_script=False
+            )
+        except Exception:
+            return False
+
+        requires = parsed["REQUIRES:"] or []
+        unsupported = parsed["UNSUPPORTED:"] or []
+
+        if not requires:
+            return False
+
+        feature_list = list(features)
+        try:
+            for expr in requires:
+                if not BooleanExpression.evaluate(expr, feature_list):
+                    return False
+            for expr in unsupported:
+                if BooleanExpression.evaluate(expr, feature_list):
+                    return False
+        except ValueError:
+            return False
+
+        return True
