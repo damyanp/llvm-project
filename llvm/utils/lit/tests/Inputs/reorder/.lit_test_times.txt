@@ -1,0 +1,6 @@
+4.200000e+01 not-executed.txt
+1.834154e-03 subdir/ccc.txt
+1.471758e-03 bbb.txt
+-4.830837e-03 fff.txt
+1.147032e-03 aaa.txt
+1.654148e-03 new-test.txt

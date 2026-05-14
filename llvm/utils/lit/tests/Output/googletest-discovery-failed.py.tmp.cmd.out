@@ -1,0 +1,14 @@
+-- Testing: 1 tests, 1 workers --
+FAIL: googletest-discovery-failed :: subdir/OneTest.py/failed_to_discover_tests_from_gtest (1 of 1)
+******************** TEST 'googletest-discovery-failed :: subdir/OneTest.py/failed_to_discover_tests_from_gtest' FAILED ********************
+
+********************
+********************
+Failed Tests (1):
+  googletest-discovery-failed :: subdir/OneTest.py/failed_to_discover_tests_from_gtest
+
+
+Testing Time: 0.02s
+
+Total Discovered Tests: 1
+  Failed: 1 (100.00%)

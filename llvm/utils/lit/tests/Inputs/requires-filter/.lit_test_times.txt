@@ -1,0 +1,4 @@
+8.950233e-04 needs-half-or-foo.txt
+5.724430e-04 needs-half.txt
+2.679348e-03 needs-half-and-bar.txt
+4.067659e-03 needs-foo.txt

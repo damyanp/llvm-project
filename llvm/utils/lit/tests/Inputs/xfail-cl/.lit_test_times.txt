@@ -1,0 +1,5 @@
+1.765966e-03 false.txt
+1.436710e-03 false2.txt
+2.312899e-03 true-xfail-conditionally.txt
+4.714727e-03 true-xfail.txt
+1.445770e-03 true.txt

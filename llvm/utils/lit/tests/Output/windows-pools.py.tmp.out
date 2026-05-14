@@ -1,0 +1,23 @@
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/run.py:101: note: Using 2 pools balancing 20 workers total distributed as [10, 10] (Windows worker limit workaround)
+-- Testing: 20 tests, 20 workers --
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.. 80.. 90.. 
+
+Testing Time: 0.12s
+
+Total Discovered Tests: 20
+  Passed: 20 (100.00%)
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/run.py:101: note: Using 4 pools balancing 17 workers total distributed as [5, 4, 4, 4] (Windows worker limit workaround)
+-- Testing: 20 tests, 17 workers --
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.. 80.... 60.. 70.. 80.. 90..
+
+Testing Time: 0.09s
+
+Total Discovered Tests: 20
+  Passed: 20 (100.00%)
+-- Testing: 20 tests, 19 workers --
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.. 80.. 90.. 
+
+Testing Time: 0.11s
+
+Total Discovered Tests: 20
+  Passed: 20 (100.00%)

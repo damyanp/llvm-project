@@ -1,0 +1,23 @@
+{
+  "__version__": [
+    23,
+    0,
+    0
+  ],
+  "elapsed": 0.01633000373840332,
+  "tests": [
+    {
+      "artifacts": {
+        "artifact-content-in-request": {
+          "contents": "VGVzdCBwYXNzZWQu"
+        }
+      },
+      "duration": "0.000949621s",
+      "expected": true,
+      "start_time": "2026-05-14T05:14:33.843682Z",
+      "status": "PASS",
+      "summary_html": "<p><text-artifact artifact-id=\"artifact-content-in-request\"></p>",
+      "testId": "test-data :: metrics.ini"
+    }
+  ]
+}

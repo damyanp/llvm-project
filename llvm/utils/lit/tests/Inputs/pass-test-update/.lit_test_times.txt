@@ -1,0 +1,5 @@
+-6.519079e-03 fail.test
+8.726120e-04 pass-silent.test
+6.880760e-04 pass.test
+6.823540e-04 xfail.test
+-6.968975e-04 xpass.test

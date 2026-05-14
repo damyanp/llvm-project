@@ -1,0 +1,6 @@
+set -o pipefail;set -x;{ { set +x; } 2>/dev/null && echo 'echo abc |
+FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-run-at-line/external-shell/run-line-with-newline.txt &&
+false' \# 'RUN: at line 1' >&2 && { set -x; } 2>/dev/null && {   
+echo abc |
+FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-run-at-line/external-shell/run-line-with-newline.txt &&
+false; }; }

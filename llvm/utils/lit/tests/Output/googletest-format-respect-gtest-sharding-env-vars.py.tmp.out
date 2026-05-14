@@ -1,0 +1,165 @@
+-- Testing: 6 tests, 1 workers --
+FAIL: googletest-format :: DummySubDir/OneTest.py/4/6 (1 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/4/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-4-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+FAIL: googletest-format :: DummySubDir/OneTest.py/1/6 (2 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/1/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-1-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+FAIL: googletest-format :: DummySubDir/OneTest.py/5/6 (3 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/5/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-5-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+FAIL: googletest-format :: DummySubDir/OneTest.py/3/6 (4 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/3/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-3-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+FAIL: googletest-format :: DummySubDir/OneTest.py/0/6 (5 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/0/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-0-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+FAIL: googletest-format :: DummySubDir/OneTest.py/2/6 (6 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/2/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py-googletest-format-5010-2-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format-respect-gtest-sharding-env-vars/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+********************
+Unresolved Tests (6):
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+
+********************
+Failed Tests (6):
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+
+
+Testing Time: 0.24s
+
+Total Discovered Tests: 36
+  Skipped   :  6 (16.67%)
+  Passed    : 18 (50.00%)
+  Unresolved:  6 (16.67%)
+  Failed    :  6 (16.67%)

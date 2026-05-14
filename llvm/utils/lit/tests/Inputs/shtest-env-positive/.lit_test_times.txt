@@ -1,0 +1,11 @@
+5.372524e-03 env-args-last-is-assign.txt
+8.869171e-04 env-args-last-is-u-arg.txt
+7.255077e-04 env-args-last-is-u.txt
+6.914139e-04 env-args-nested-none.txt
+2.249479e-03 env-calls-env.txt
+4.932642e-03 env-current-testcase.txt
+1.326084e-03 env-i.txt
+1.790285e-03 env-no-subcommand.txt
+1.238585e-03 env-u.txt
+1.019716e-03 env.txt
+9.653568e-04 mixed.txt

@@ -1,0 +1,4 @@
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/verbosity/lit.cfg:10: note: this is a note
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/verbosity/lit.cfg:11: warning: this is a warning
+
+1 warning(s) in tests

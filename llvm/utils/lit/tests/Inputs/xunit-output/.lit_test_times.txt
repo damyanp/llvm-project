@@ -1,0 +1,5 @@
+-8.254051e-04 bad&name.ini
+2.627373e-04 excluded.ini
+2.498627e-04 missing_feature.ini
+2.026558e-04 pass.ini
+1.890659e-04 unsupported.ini

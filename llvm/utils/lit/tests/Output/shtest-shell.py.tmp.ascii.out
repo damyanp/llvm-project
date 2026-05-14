@@ -1,0 +1,1655 @@
+-- Testing: 47 tests, 1 workers --
+FAIL: shtest-shell :: colon-error.txt (1 of 47)
+******************** TEST 'shtest-shell :: colon-error.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+: | echo "hello"
+# executed command: :
+# .---command stderr------------
+# | Unsupported: ':' cannot be part of a pipeline
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+PASS: shtest-shell :: continuations.txt (2 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo 'foo'       'bar' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/continuations.txt.tmp.out
+# executed command: echo foo bar
+# RUN: at line 5
+echo 'foo'       'bar'       'baz' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/continuations.txt.tmp.out
+# executed command: echo foo bar baz
+# RUN: at line 11
+echo 'foo'        'bar'        'baz' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/continuations.txt.tmp.out
+# executed command: echo foo bar baz
+# RUN: at line 17
+FileCheck -match-full-lines -input-file=/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/continuations.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/continuations.txt
+# executed command: FileCheck -match-full-lines -input-file=/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/continuations.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/continuations.txt
+
+--
+
+********************
+PASS: shtest-shell :: dev-null.txt (3 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 4
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py --my_arg /dev/null | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK1
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py --my_arg /dev/null
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK1
+# RUN: at line 7
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py --my_arg=/dev/null | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK2
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py --my_arg=/dev/null
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK2
+# RUN: at line 10
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py -a /dev/null | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK3
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py -a /dev/null
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK3
+# RUN: at line 13
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py -a=/dev/null | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK4
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/check_args.py -a=/dev/null
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/dev-null.txt --check-prefix=CHECK4
+
+--
+
+********************
+PASS: shtest-shell :: diff-I.txt (4 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 3
+echo 'foo' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.0
+# executed command: echo foo
+# RUN: at line 4
+echo 'bar1' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.0
+# executed command: echo bar1
+# RUN: at line 5
+echo 'foo' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.0
+# executed command: echo foo
+# RUN: at line 7
+echo 'foo' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.1
+# executed command: echo foo
+# RUN: at line 8
+echo 'bar2' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.1
+# executed command: echo bar2
+# RUN: at line 9
+echo 'foo' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.1
+# executed command: echo foo
+# RUN: at line 11
+diff -I "bar*" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.1
+# executed command: diff -I 'bar*' /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-I.txt.tmp.1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-b.txt (5 of 47)
+******************** TEST 'shtest-shell :: diff-b.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo 'f o o' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.0
+# executed command: echo 'f o o'
+# RUN: at line 2
+echo 'b a r' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.0
+# executed command: echo 'b a r'
+# RUN: at line 4
+echo 'f  o  o' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.1
+# executed command: echo 'f  o  o'
+# RUN: at line 5
+echo 'bar' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.1
+# executed command: echo bar
+# RUN: at line 8
+diff -b /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.1
+# executed command: diff -b /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.1
+# .---command stdout------------
+# | *** /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.0
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-b.txt.tmp.1
+# | ***************
+# | *** 1,2 ****
+# |   f o o
+# | ! b a r
+# | --- 1,2 ----
+# |   f o o
+# | ! bar
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-encodings.txt (6 of 47)
+******************** TEST 'shtest-shell :: diff-encodings.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff -u diff-in.bin diff-in.bin
+# executed command: diff -u diff-in.bin diff-in.bin
+# RUN: at line 4
+diff -u diff-in.utf16 diff-in.bin && false || true
+# executed command: diff -u diff-in.utf16 diff-in.bin
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf16
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.bin
+# | @@ -1,3 +1,3 @@
+# |   f o o 
+# | - b a r 
+# | + b a r\xff\xff 
+# |   b a z 
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 5
+diff -u diff-in.utf8 diff-in.bin && false || true
+# executed command: diff -u diff-in.utf8 diff-in.bin
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf8
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.bin
+# | @@ -1,3 +1,3 @@
+# | -foo
+# | -bar
+# | -baz
+# | + f o o 
+# | + b a r\xff\xff 
+# | + b a z 
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 6
+diff -u diff-in.bin diff-in.utf8 && false || true
+# executed command: diff -u diff-in.bin diff-in.utf8
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.bin
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf8
+# | @@ -1,3 +1,3 @@
+# | - f o o 
+# | - b a r\xff\xff 
+# | - b a z 
+# | +foo
+# | +bar
+# | +baz
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 8
+cat diff-in.bin | diff -u - diff-in.bin
+# executed command: cat diff-in.bin
+# executed command: diff -u - diff-in.bin
+# RUN: at line 9
+cat diff-in.bin | diff -u diff-in.bin -
+# executed command: cat diff-in.bin
+# executed command: diff -u diff-in.bin -
+# RUN: at line 10
+cat diff-in.bin | diff -u diff-in.utf16 - && false || true
+# executed command: cat diff-in.bin
+# executed command: diff -u diff-in.utf16 -
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf16
+# | +++ -
+# | @@ -1,3 +1,3 @@
+# |   f o o 
+# | - b a r 
+# | + b a r\xff\xff 
+# |   b a z 
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 11
+cat diff-in.bin | diff -u diff-in.utf8 - && false || true
+# executed command: cat diff-in.bin
+# executed command: diff -u diff-in.utf8 -
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf8
+# | +++ -
+# | @@ -1,3 +1,3 @@
+# | -foo
+# | -bar
+# | -baz
+# | + f o o 
+# | + b a r\xff\xff 
+# | + b a z 
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 12
+cat diff-in.bin | diff -u - diff-in.utf8 && false || true
+# executed command: cat diff-in.bin
+# executed command: diff -u - diff-in.utf8
+# .---command stdout------------
+# | --- -
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.utf8
+# | @@ -1,3 +1,3 @@
+# | - f o o 
+# | - b a r\xff\xff 
+# | - b a z 
+# | +foo
+# | +bar
+# | +baz
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 15
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-1.txt (7 of 47)
+******************** TEST 'shtest-shell :: diff-error-1.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff -B temp1.txt temp2.txt
+# executed command: diff -B temp1.txt temp2.txt
+# .---command stderr------------
+# | Unsupported: 'diff': option -B not recognized
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-2.txt (8 of 47)
+******************** TEST 'shtest-shell :: diff-error-2.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff temp.txt
+# executed command: diff temp.txt
+# .---command stderr------------
+# | Error: missing or extra operand
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-3.txt (9 of 47)
+******************** TEST 'shtest-shell :: diff-error-3.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff temp.txt temp1.txt
+# executed command: diff temp.txt temp1.txt
+# .---command stderr------------
+# | Error: 'diff' command failed, [Errno 2] No such file or directory: '/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/temp.txt'
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-4.txt (10 of 47)
+******************** TEST 'shtest-shell :: diff-error-4.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+echo "hello-first" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp
+# executed command: echo hello-first
+# RUN: at line 4
+echo "hello-second" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp1
+# executed command: echo hello-second
+# RUN: at line 5
+diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp1
+# executed command: diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp1
+# .---command stdout------------
+# | *** /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-error-4.txt.tmp1
+# | ***************
+# | *** 1 ****
+# | ! hello-first
+# | --- 1 ----
+# | ! hello-second
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-5.txt (11 of 47)
+******************** TEST 'shtest-shell :: diff-error-5.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff -u
+# executed command: diff -u
+# .---command stderr------------
+# | Error: missing or extra operand
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-error-6.txt (12 of 47)
+******************** TEST 'shtest-shell :: diff-error-6.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff -u a.txt b.txt c.txt
+# executed command: diff -u a.txt b.txt c.txt
+# .---command stderr------------
+# | Error: missing or extra operand
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-pipes.txt (13 of 47)
+******************** TEST 'shtest-shell :: diff-pipes.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo foo > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: echo foo
+# RUN: at line 2
+echo bar > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar
+# executed command: echo bar
+# RUN: at line 5
+diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo | FileCheck -allow-empty -check-prefix=EMPTY /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# executed command: diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: FileCheck -allow-empty -check-prefix=EMPTY /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# RUN: at line 6
+diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt && false || true
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# executed command: true
+# RUN: at line 9
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo | diff -u - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: diff -u - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# RUN: at line 10
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo | diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo -
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo -
+# RUN: at line 11
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar | diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo - && false || true
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo -
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# | +++ -
+# | @@ -1 +1 @@
+# | -foo
+# | +bar
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 12
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar | diff -u - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo && false || true
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar
+# executed command: diff -u - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# .---command stdout------------
+# | --- -
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# | @@ -1 +1 @@
+# | -bar
+# | +foo
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 15
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo | diff - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo | FileCheck -allow-empty -check-prefix=EMPTY /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: diff - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo
+# executed command: FileCheck -allow-empty -check-prefix=EMPTY /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# RUN: at line 16
+cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar | diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo - | FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt && false || true
+# executed command: cat /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.bar
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-pipes.txt.tmp.foo -
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+# executed command: FileCheck /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-pipes.txt
+# executed command: true
+# RUN: at line 19
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-0.txt (14 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-0.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# RUN: at line 6
+touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1/dir1unique
+# executed command: touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1/dir1unique
+# RUN: at line 7
+touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2/dir2unique
+# executed command: touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2/dir2unique
+# RUN: at line 8
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2
+# .---command stdout------------
+# | Only in /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir1: dir1unique
+# | Only in /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-0.txt.tmp/dir2: dir2unique
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-1.txt (15 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-1.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# RUN: at line 6
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1/subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2/subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1/subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2/subdir
+# RUN: at line 7
+echo "12345" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1/subdir/f01
+# executed command: echo 12345
+# RUN: at line 8
+echo "00000" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2/subdir/f01
+# executed command: echo 00000
+# RUN: at line 9
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2
+# .---command stdout------------
+# | *** /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir1/subdir/f01
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-1.txt.tmp/dir2/subdir/f01
+# | ***************
+# | *** 1 ****
+# | ! 12345
+# | --- 1 ----
+# | ! 00000
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-2.txt (16 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-2.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# RUN: at line 6
+echo extra > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2/extrafile
+# executed command: echo extra
+# RUN: at line 7
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2
+# .---command stdout------------
+# | Only in /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-2.txt.tmp/dir2: extrafile
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-3.txt (17 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-3.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# RUN: at line 6
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1/extra_subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1/extra_subdir
+# RUN: at line 7
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir2
+# .---command stdout------------
+# | Only in /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-3.txt.tmp/dir1: extra_subdir
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-4.txt (18 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-4.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# RUN: at line 6
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1/extra_subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1/extra_subdir
+# RUN: at line 7
+echo ZYX > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2/extra_subdir
+# executed command: echo ZYX
+# RUN: at line 8
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2
+# .---command stdout------------
+# | File /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir1/extra_subdir is a directory while file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-4.txt.tmp/dir2/extra_subdir is a regular file
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-5.txt (19 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-5.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# RUN: at line 6
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1/extra_subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1/extra_subdir
+# RUN: at line 7
+echo ZYX > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1/extra_subdir/extra_file
+# executed command: echo ZYX
+# RUN: at line 8
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir2
+# .---command stdout------------
+# | Only in /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-5.txt.tmp/dir1: extra_subdir
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-6.txt (20 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-6.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# RUN: at line 3
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# RUN: at line 6
+echo -n > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1/extra_file
+# executed command: echo -n
+# RUN: at line 7
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2/extra_file
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2/extra_file
+# RUN: at line 8
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2
+# .---command stdout------------
+# | File /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir1/extra_file is a regular empty file while file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-6.txt.tmp/dir2/extra_file is a directory
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-7.txt (21 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-7.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+diff -r - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-7.txt.tmp
+# executed command: diff -r - /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-7.txt.tmp
+# .---command stderr------------
+# | Error: cannot recursively compare '-'
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-r-error-8.txt (22 of 47)
+******************** TEST 'shtest-shell :: diff-r-error-8.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 2
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-8.txt.tmp -
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r-error-8.txt.tmp -
+# .---command stderr------------
+# | Error: cannot recursively compare '-'
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+PASS: shtest-shell :: diff-r.txt (23 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 4
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+# RUN: at line 5
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+# RUN: at line 8
+echo "hello" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/f1
+# executed command: echo hello
+# RUN: at line 9
+echo "hello" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/f1
+# executed command: echo hello
+# RUN: at line 12
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/subdir
+# RUN: at line 13
+echo "12345" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/subdir/f01
+# executed command: echo 12345
+# RUN: at line 14
+echo "12345" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/subdir/f01
+# executed command: echo 12345
+# RUN: at line 15
+echo -e "xxx\nzzz\nyyy" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/subdir/f02
+# executed command: echo -e 'xxx\nzzz\nyyy'
+# RUN: at line 16
+echo -e "xxx\nzzz\nyyy" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/subdir/f02
+# executed command: echo -e 'xxx\nzzz\nyyy'
+# RUN: at line 19
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/empty_subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/empty_subdir
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1/empty_subdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2/empty_subdir
+# RUN: at line 20
+diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+# executed command: diff -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-r.txt.tmp/dir2
+
+--
+
+********************
+FAIL: shtest-shell :: diff-strip-trailing-cr.txt (24 of 47)
+******************** TEST 'shtest-shell :: diff-strip-trailing-cr.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+diff -u diff-in.dos diff-in.unix && false || true
+# executed command: diff -u diff-in.dos diff-in.unix
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.dos
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.unix
+# | @@ -1,3 +1,3 @@
+# | -In this file, the
+# | -sequence "\r\n"
+# | -terminates lines.
+# | +In this file, the
+# | +sequence "\n"
+# | +terminates lines.
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 4
+diff -u diff-in.unix diff-in.dos && false || true
+# executed command: diff -u diff-in.unix diff-in.dos
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.unix
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.dos
+# | @@ -1,3 +1,3 @@
+# | -In this file, the
+# | -sequence "\n"
+# | -terminates lines.
+# | +In this file, the
+# | +sequence "\r\n"
+# | +terminates lines.
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 6
+diff -u --strip-trailing-cr diff-in.dos diff-in.unix && false || true
+# executed command: diff -u --strip-trailing-cr diff-in.dos diff-in.unix
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.dos
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.unix
+# | @@ -1,3 +1,3 @@
+# |  In this file, the
+# | -sequence "\r\n"
+# | +sequence "\n"
+# |  terminates lines.
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 7
+diff -u --strip-trailing-cr diff-in.unix diff-in.dos && false || true
+# executed command: diff -u --strip-trailing-cr diff-in.unix diff-in.dos
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.unix
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/diff-in.dos
+# | @@ -1,3 +1,3 @@
+# |  In this file, the
+# | -sequence "\n"
+# | +sequence "\r\n"
+# |  terminates lines.
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 10
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-unified.txt (25 of 47)
+******************** TEST 'shtest-shell :: diff-unified.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo 1 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 1
+# RUN: at line 2
+echo 2 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 2
+# RUN: at line 3
+echo 3 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 3
+# RUN: at line 4
+echo 4 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 4
+# RUN: at line 5
+echo 5 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 5
+# RUN: at line 6
+echo 6 foo >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 6 foo
+# RUN: at line 7
+echo 7 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 7
+# RUN: at line 8
+echo 8 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 8
+# RUN: at line 9
+echo 9 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 9
+# RUN: at line 10
+echo 10 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 10
+# RUN: at line 11
+echo 11 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# executed command: echo 11
+# RUN: at line 13
+echo 1 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 1
+# RUN: at line 14
+echo 2 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 2
+# RUN: at line 15
+echo 3 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 3
+# RUN: at line 16
+echo 4 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 4
+# RUN: at line 17
+echo 5 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 5
+# RUN: at line 18
+echo 6 bar >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 6 bar
+# RUN: at line 19
+echo 7 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 7
+# RUN: at line 20
+echo 8 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 8
+# RUN: at line 21
+echo 9 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 9
+# RUN: at line 22
+echo 10 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 10
+# RUN: at line 23
+echo 11 >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# executed command: echo 11
+# RUN: at line 26
+diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar && false || true
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# | @@ -3,7 +3,7 @@
+# |  3
+# |  4
+# |  5
+# | -6 foo
+# | +6 bar
+# |  7
+# |  8
+# |  9
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 29
+diff -U 2 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar && false || true
+# executed command: diff -U 2 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# | @@ -4,5 +4,5 @@
+# |  4
+# |  5
+# | -6 foo
+# | +6 bar
+# |  7
+# |  8
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 30
+diff -U4 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar && false || true
+# executed command: diff -U4 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# | @@ -2,9 +2,9 @@
+# |  2
+# |  3
+# |  4
+# |  5
+# | -6 foo
+# | +6 bar
+# |  7
+# |  8
+# |  9
+# |  10
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 31
+diff -U0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar && false || true
+# executed command: diff -U0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# .---command stdout------------
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# | +++ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.bar
+# | @@ -6 +6 @@
+# | -6 foo
+# | +6 bar
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 34
+diff -U 30.1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo && false || true
+# executed command: diff -U 30.1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# .---command stderr------------
+# | Error: invalid '-U' argument: 30.1
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 35
+diff -U-1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo && false || true
+# executed command: diff -U-1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-unified.txt.tmp.foo
+# .---command stderr------------
+# | Error: invalid '-U' argument: -1
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 38
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: diff-w.txt (26 of 47)
+******************** TEST 'shtest-shell :: diff-w.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo 'f o o' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0
+# executed command: echo 'f o o'
+# RUN: at line 2
+echo 'b a r' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0
+# executed command: echo 'b a r'
+# RUN: at line 3
+echo 'b a z' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0
+# executed command: echo 'b a z'
+# RUN: at line 5
+echo 'f  o  o' > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# executed command: echo 'f  o  o'
+# RUN: at line 6
+echo 'bar' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# executed command: echo bar
+# RUN: at line 7
+echo 'b a t' >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# executed command: echo 'b a t'
+# RUN: at line 10
+diff -w /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# executed command: diff -w /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# .---command stdout------------
+# | *** /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.0
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/diff-w.txt.tmp.1
+# | ***************
+# | *** 1,3 ****
+# |   foo
+# |   bar
+# | ! baz
+# | --- 1,3 ----
+# |   foo
+# |   bar
+# | ! bat
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: echo-at-redirect-stderr.txt (27 of 47)
+******************** TEST 'shtest-shell :: echo-at-redirect-stderr.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 1
+@echo 2> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-at-redirect-stderr.txt.tmp
+# executed command: @echo
+# .---command stderr------------
+# | stdin and stderr redirects not supported for @echo
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: echo-at-redirect-stdin.txt (28 of 47)
+******************** TEST 'shtest-shell :: echo-at-redirect-stdin.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 1
+touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-at-redirect-stdin.txt.tmp
+# executed command: touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-at-redirect-stdin.txt.tmp
+# RUN: at line 2
+@echo < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-at-redirect-stdin.txt.tmp
+# executed command: @echo
+# .---command stderr------------
+# | stdin and stderr redirects not supported for @echo
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: echo-redirect-stderr.txt (29 of 47)
+******************** TEST 'shtest-shell :: echo-redirect-stderr.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 1
+echo 2> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-redirect-stderr.txt.tmp
+# executed command: echo
+# .---command stderr------------
+# | stdin and stderr redirects not supported for echo
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: echo-redirect-stdin.txt (30 of 47)
+******************** TEST 'shtest-shell :: echo-redirect-stdin.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 1
+touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-redirect-stdin.txt.tmp
+# executed command: touch /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-redirect-stdin.txt.tmp
+# RUN: at line 2
+echo < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/echo-redirect-stdin.txt.tmp
+# executed command: echo
+# .---command stderr------------
+# | stdin and stderr redirects not supported for echo
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: error-0.txt (31 of 47)
+******************** TEST 'shtest-shell :: error-0.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+not-a-real-command
+# executed command: not-a-real-command
+# .---command stderr------------
+# | 'not-a-real-command': command not found
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+UNRESOLVED: shtest-shell :: error-1.txt (32 of 47)
+******************** TEST 'shtest-shell :: error-1.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# shell parser error on RUN: at line 3: echo "missing quote
+
+--
+
+********************
+FAIL: shtest-shell :: error-2.txt (33 of 47)
+******************** TEST 'shtest-shell :: error-2.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+echo "hello" 3>&1
+# executed command: echo hello
+# .---command stderr------------
+# | Unsupported redirect: (('>&', 3), '1')
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: mkdir-error-0.txt (34 of 47)
+******************** TEST 'shtest-shell :: mkdir-error-0.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+mkdir -p temp | rm -rf temp
+# executed command: mkdir -p temp
+# .---command stderr------------
+# | Unsupported: 'mkdir' cannot be part of a pipeline
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: mkdir-error-1.txt (35 of 47)
+******************** TEST 'shtest-shell :: mkdir-error-1.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+mkdir -p -m 777 temp
+# executed command: mkdir -p -m 777 temp
+# .---command stderr------------
+# | Unsupported: 'mkdir':  option -m not recognized
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: mkdir-error-2.txt (36 of 47)
+******************** TEST 'shtest-shell :: mkdir-error-2.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+mkdir -p
+# executed command: mkdir -p
+# .---command stderr------------
+# | Error: 'mkdir' is missing an operand
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: pipefail.txt (37 of 47)
+******************** TEST 'shtest-shell :: pipefail.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+false | echo test
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+# executed command: echo test
+# .---command stdout------------
+# | test
+# `-----------------------------
+
+--
+
+********************
+PASS: shtest-shell :: redirects.txt (38 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 3
+echo "not-present" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stdout-write
+# executed command: echo not-present
+# RUN: at line 4
+echo "is-present" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stdout-write
+# executed command: echo is-present
+# RUN: at line 5
+FileCheck --check-prefix=STDOUT-WRITE < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stdout-write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# executed command: FileCheck --check-prefix=STDOUT-WRITE /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# RUN: at line 10
+echo "appended-line" >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stdout-write
+# executed command: echo appended-line
+# RUN: at line 11
+FileCheck --check-prefix=STDOUT-APPEND < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stdout-write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# executed command: FileCheck --check-prefix=STDOUT-APPEND /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# RUN: at line 19
+echo "not-present" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stderr-write
+# executed command: echo not-present
+# RUN: at line 20
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py 2> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stderr-write
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py
+# RUN: at line 21
+FileCheck --check-prefix=STDERR-WRITE < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stderr-write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# executed command: FileCheck --check-prefix=STDERR-WRITE /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# RUN: at line 26
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py 2>> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stderr-write
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py
+# RUN: at line 27
+FileCheck --check-prefix=STDERR-APPEND < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.stderr-write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# executed command: FileCheck --check-prefix=STDERR-APPEND /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# RUN: at line 35
+echo "not-present" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.combined
+# executed command: echo not-present
+# RUN: at line 36
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stdout-and-stderr.py &> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.combined
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/write-to-stdout-and-stderr.py
+# RUN: at line 37
+FileCheck --check-prefix=COMBINED-WRITE < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/redirects.txt.tmp.combined /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+# executed command: FileCheck --check-prefix=COMBINED-WRITE /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/redirects.txt
+
+--
+
+********************
+FAIL: shtest-shell :: rm-error-0.txt (39 of 47)
+******************** TEST 'shtest-shell :: rm-error-0.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+rm -rf temp | echo "hello"
+# executed command: rm -rf temp
+# .---command stderr------------
+# | Unsupported: 'rm' cannot be part of a pipeline
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: rm-error-1.txt (40 of 47)
+******************** TEST 'shtest-shell :: rm-error-1.txt' FAILED ********************
+Exit Code: 127
+
+Command Output (stdout):
+--
+# RUN: at line 3
+rm -f -v temp
+# executed command: rm -f -v temp
+# .---command stderr------------
+# | Unsupported: 'rm':  option -v not recognized
+# `-----------------------------
+# error: command failed with exit status: 127
+
+--
+
+********************
+FAIL: shtest-shell :: rm-error-2.txt (41 of 47)
+******************** TEST 'shtest-shell :: rm-error-2.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+rm -r hello
+# executed command: rm -r hello
+# .---command stderr------------
+# | Error: 'rm' command failed, [Errno 2] No such file or directory: '/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/hello'
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: rm-error-3.txt (42 of 47)
+******************** TEST 'shtest-shell :: rm-error-3.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 3
+mkdir -p test
+# executed command: mkdir -p test
+# RUN: at line 4
+rm -f test
+# executed command: rm -f test
+# .---command stderr------------
+# | Error: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/test is a directory
+# `-----------------------------
+# error: command failed with exit status: 1
+
+--
+
+********************
+PASS: shtest-shell :: rm-unicode-0.txt (43 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 3
+mkdir -p  Output/??
+# executed command: mkdir -p 'Output/??'
+# RUN: at line 4
+echo "" > Output/??/??.txt
+# executed command: echo ''
+# RUN: at line 5
+rm Output/??/??.txt
+# executed command: rm 'Output/??/??.txt'
+# RUN: at line 6
+echo "" > Output/??/??.txt
+# executed command: echo ''
+# RUN: at line 7
+rm -r Output/??
+# executed command: rm -r 'Output/??'
+
+--
+
+********************
+PASS: shtest-shell :: sequencing-0.txt (44 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 3
+echo "first-line" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out && echo "second-line" >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out
+# executed command: echo first-line
+# executed command: echo second-line
+# RUN: at line 4
+FileCheck --check-prefix CHECK-AND < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# executed command: FileCheck --check-prefix CHECK-AND /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# RUN: at line 12
+echo "first-line" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out || echo "second-line" >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out
+# executed command: echo first-line
+# RUN: at line 13
+FileCheck --check-prefix CHECK-OR-1 < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# executed command: FileCheck --check-prefix CHECK-OR-1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# RUN: at line 18
+false || echo "second-line" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+# executed command: echo second-line
+# RUN: at line 19
+FileCheck --check-prefix CHECK-OR-2 < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# executed command: FileCheck --check-prefix CHECK-OR-2 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# RUN: at line 24
+echo "first-line" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out; echo "second-line" >> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out
+# executed command: echo first-line
+# executed command: echo second-line
+# RUN: at line 25
+FileCheck --check-prefix CHECK-SEQ < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/sequencing-0.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+# executed command: FileCheck --check-prefix CHECK-SEQ /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/sequencing-0.txt
+
+--
+
+********************
+XFAIL: shtest-shell :: sequencing-1.txt (45 of 47)
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+false && true
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+FAIL: shtest-shell :: stdout-encoding.txt (46 of 47)
+******************** TEST 'shtest-shell :: stdout-encoding.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 4
+cat diff-in.bin
+# executed command: cat diff-in.bin
+# .---command stdout------------
+# |  f o o 
+# |  b a r?? 
+# |  b a z 
+# `-----------------------------
+# RUN: at line 7
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+PASS: shtest-shell :: valid-shell.txt (47 of 47)
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 4
+rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# executed command: rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# RUN: at line 5
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# RUN: at line 6
+FileCheck --check-prefix=REMOVE-FILE < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-FILE /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 7
+echo "create a temp file" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# executed command: echo 'create a temp file'
+# RUN: at line 8
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# RUN: at line 9
+FileCheck --check-prefix=FILE-EXIST < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=FILE-EXIST /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 10
+rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# executed command: rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# RUN: at line 11
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.write
+# RUN: at line 12
+FileCheck --check-prefix=REMOVE-FILE < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-FILE /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 21
+rm -f -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# executed command: rm -f -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 22
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 23
+FileCheck --check-prefix=REMOVE-PARENT-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-PARENT-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 24
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 25
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 26
+FileCheck --check-prefix=MAKE-PARENT-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=MAKE-PARENT-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 27
+rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test || true
+# executed command: rm -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# .---command stderr------------
+# | Error: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test is a directory
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 28
+rm -f -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# executed command: rm -f -r /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 29
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 30
+FileCheck --check-prefix=REMOVE-PARENT-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-PARENT-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 37
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 38
+mkdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# executed command: mkdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 39
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 40
+FileCheck --check-prefix=MAKE-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=MAKE-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 41
+cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1 && mkdir foo
+# executed command: cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# executed command: mkdir foo
+# RUN: at line 42
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 43
+FileCheck --check-prefix=MAKE-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=MAKE-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 44
+cd .. && rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# executed command: cd ..
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 45
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test1
+# RUN: at line 46
+FileCheck --check-prefix=REMOVE-DIR < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-DIR /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 53
+rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# executed command: rm -rf /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 54
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2
+# RUN: at line 55
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2 > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2
+# RUN: at line 56
+FileCheck --check-prefix=DIRS-EXIST < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=DIRS-EXIST /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 57
+mkdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test || true
+# executed command: mkdir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 58
+echo "create a temp file" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/temp.write
+# executed command: echo 'create a temp file'
+# RUN: at line 59
+echo "create a temp1 file" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1/temp1.write
+# executed command: echo 'create a temp1 file'
+# RUN: at line 60
+echo "create a temp2 file" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2/temp2.write
+# executed command: echo 'create a temp2 file'
+# RUN: at line 61
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/temp.write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1/temp1.write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2/temp2.write> /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py file /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/temp.write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test1/temp1.write /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test/test2/temp2.write
+# RUN: at line 62
+FileCheck --check-prefix=FILES-EXIST < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=FILES-EXIST /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 63
+rm -r -f /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp*
+# executed command: rm -r -f '/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp*'
+# RUN: at line 64
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out
+# executed command: /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/../check_path.py dir /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.test
+# RUN: at line 65
+FileCheck --check-prefix=REMOVE-ALL < /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.out /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# executed command: FileCheck --check-prefix=REMOVE-ALL /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/valid-shell.txt
+# RUN: at line 77
+echo "hello" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout
+# executed command: echo hello
+# RUN: at line 78
+echo "hello" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# executed command: echo hello
+# RUN: at line 79
+diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# executed command: diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# RUN: at line 80
+diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# executed command: diff -u /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# RUN: at line 81
+echo "hello-2" > /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# executed command: echo hello-2
+# RUN: at line 82
+diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout || true
+# executed command: diff /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# .---command stdout------------
+# | *** /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.stdout
+# | --- /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp1.stdout
+# | ***************
+# | *** 1 ****
+# | ! hello
+# | --- 1 ----
+# | ! hello-2
+# `-----------------------------
+# error: command failed with exit status: 1
+# executed command: true
+# RUN: at line 84
+mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir2
+# executed command: mkdir -p /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir1 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir2
+# RUN: at line 85
+cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir1 && echo "hello" > temp1.txt
+# executed command: cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir1
+# executed command: echo hello
+# RUN: at line 86
+cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir2 && echo "hello" > temp2.txt
+# executed command: cd /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-shell/Output/valid-shell.txt.tmp.dir2
+# executed command: echo hello
+# RUN: at line 87
+diff temp2.txt ../valid-shell.txt.tmp.dir1/temp1.txt
+# executed command: diff temp2.txt ../valid-shell.txt.tmp.dir1/temp1.txt
+
+--
+
+********************
+********************
+Unresolved Tests (1):
+  shtest-shell :: error-1.txt
+
+********************
+Failed Tests (37):
+  shtest-shell :: colon-error.txt
+  shtest-shell :: diff-b.txt
+  shtest-shell :: diff-encodings.txt
+  shtest-shell :: diff-error-1.txt
+  shtest-shell :: diff-error-2.txt
+  shtest-shell :: diff-error-3.txt
+  shtest-shell :: diff-error-4.txt
+  shtest-shell :: diff-error-5.txt
+  shtest-shell :: diff-error-6.txt
+  shtest-shell :: diff-pipes.txt
+  shtest-shell :: diff-r-error-0.txt
+  shtest-shell :: diff-r-error-1.txt
+  shtest-shell :: diff-r-error-2.txt
+  shtest-shell :: diff-r-error-3.txt
+  shtest-shell :: diff-r-error-4.txt
+  shtest-shell :: diff-r-error-5.txt
+  shtest-shell :: diff-r-error-6.txt
+  shtest-shell :: diff-r-error-7.txt
+  shtest-shell :: diff-r-error-8.txt
+  shtest-shell :: diff-strip-trailing-cr.txt
+  shtest-shell :: diff-unified.txt
+  shtest-shell :: diff-w.txt
+  shtest-shell :: echo-at-redirect-stderr.txt
+  shtest-shell :: echo-at-redirect-stdin.txt
+  shtest-shell :: echo-redirect-stderr.txt
+  shtest-shell :: echo-redirect-stdin.txt
+  shtest-shell :: error-0.txt
+  shtest-shell :: error-2.txt
+  shtest-shell :: mkdir-error-0.txt
+  shtest-shell :: mkdir-error-1.txt
+  shtest-shell :: mkdir-error-2.txt
+  shtest-shell :: pipefail.txt
+  shtest-shell :: rm-error-0.txt
+  shtest-shell :: rm-error-1.txt
+  shtest-shell :: rm-error-2.txt
+  shtest-shell :: rm-error-3.txt
+  shtest-shell :: stdout-encoding.txt
+
+
+Testing Time: 2.51s
+
+Total Discovered Tests: 47
+  Passed           :  8 (17.02%)
+  Expectedly Failed:  1 (2.13%)
+  Unresolved       :  1 (2.13%)
+  Failed           : 37 (78.72%)

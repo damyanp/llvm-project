@@ -1,0 +1,5 @@
+set -o pipefail;set -x;{ { set +x; } 2>/dev/null && echo 'echo start' \# 'RUN: at line 1' >&2 && { set -x; } 2>/dev/null && {   echo start; }; } &&
+{ { set +x; } 2>/dev/null && echo 'sleep 300 & PID=$!' \# 'RUN: at line 2' >&2 && { set -x; } 2>/dev/null && {   sleep 300 & PID=$!; }; } &&
+{ { set +x; } 2>/dev/null && echo 'sleep 2' \# 'RUN: at line 3' >&2 && { set -x; } 2>/dev/null && {   sleep 2; }; } &&
+{ { set +x; } 2>/dev/null && echo 'kill $PID' \# 'RUN: at line 4' >&2 && { set -x; } 2>/dev/null && {   kill $PID; }; } &&
+{ { set +x; } 2>/dev/null && echo 'echo end' \# 'RUN: at line 5' >&2 && { set -x; } 2>/dev/null && {   echo end; }; }

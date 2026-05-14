@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="0.02">
+<testsuite name="test-data" tests="5" failures="1" skipped="3" time="0.00">
+<testcase classname="test-data.test-data" name="bad&amp;name.ini" time="0.00">
+  <failure><![CDATA[& < > ]]]]><![CDATA[> &"]]></failure>
+</testcase>
+<testcase classname="test-data.test-data" name="excluded.ini" time="0.00">
+  <skipped message="Test not selected (--filter, --max-tests)"/>
+</testcase>
+<testcase classname="test-data.test-data" name="missing_feature.ini" time="0.00">
+  <skipped message="Missing required feature(s): dummy_feature"/>
+</testcase>
+<testcase classname="test-data.test-data" name="pass.ini" time="0.00"/>
+<testcase classname="test-data.test-data" name="unsupported.ini" time="0.00">
+  <skipped message="Unsupported configuration"/>
+</testcase>
+</testsuite>
+</testsuites>

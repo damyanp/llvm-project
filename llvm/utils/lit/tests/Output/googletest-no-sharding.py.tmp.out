@@ -1,0 +1,40 @@
+-- Testing: 1 tests, 1 workers --
+FAIL: googletest-no-sharding :: DummySubDir/OneTest.py (1 of 1)
+******************** TEST 'googletest-no-sharding :: DummySubDir/OneTest.py' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-no-sharding/DummySubDir/OneTest.py-googletest-no-sharding-5037.json GTEST_SHUFFLE=1 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-no-sharding/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-no-sharding/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-no-sharding/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+********************
+Unresolved Tests (1):
+  googletest-no-sharding :: FirstTest/subTestD
+
+********************
+Failed Tests (1):
+  googletest-no-sharding :: FirstTest/subTestB
+
+
+Testing Time: 0.05s
+
+Total Discovered Tests: 6
+  Skipped   : 1 (16.67%)
+  Passed    : 3 (50.00%)
+  Unresolved: 1 (16.67%)
+  Failed    : 1 (16.67%)

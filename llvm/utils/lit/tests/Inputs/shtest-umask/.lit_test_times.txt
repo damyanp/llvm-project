@@ -1,0 +1,3 @@
+-5.390882e-03 umask-bad-arg.txt
+5.225468e-02 umask-ok.txt
+-8.230209e-04 umask-too-many-args.txt

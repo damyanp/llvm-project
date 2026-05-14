@@ -1,0 +1,5 @@
+5.875587e-03 test.txt
+-3.551483e-03 test-neg1.txt
+-3.700972e-03 test-neg2.txt
+-2.715349e-03 test-neg3.txt
+-3.970861e-03 test-neg4.txt

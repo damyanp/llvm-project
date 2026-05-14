@@ -1,0 +1,4 @@
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/formats/googletest.py:65: warning: Skip adding '/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-detect-duplicate/DummySubDir/OneTest.py' since it has been added to the test pool
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/discovery.py:273: warning: input 'Inputs/googletest-detect-duplicate' contained no tests
+
+2 warning(s) in tests

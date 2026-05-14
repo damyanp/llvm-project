@@ -1,0 +1,12 @@
+-- Testing: 1 tests, 1 workers --
+PASS: test-data :: metrics.ini (1 of 1)
+********** TEST 'test-data :: metrics.ini' RESULTS **********
+value0: 1 
+value1: 2.3456 
+value2: "stringy" 
+**********
+
+Testing Time: 0.02s
+
+Total Discovered Tests: 1
+  Passed: 1 (100.00%)

@@ -1,0 +1,17 @@
+-3.140211e-03 exclamation-args-nested-none.txt
+-1.102686e-03 exclamation-args-none.txt
+-2.443631e-01 exclamation-calls-external.txt
+-7.669926e-04 not-args-last-is-crash.txt
+-6.792545e-04 not-args-nested-none.txt
+-1.276350e-02 not-args-none.txt
+-9.996891e-04 not-calls-cd.txt
+-1.051903e-03 not-calls-colon.txt
+-6.830907e-02 not-calls-diff-with-crash.txt
+-4.248040e-01 not-calls-diff.txt
+-9.922981e-04 not-calls-echo.txt
+-7.674694e-04 not-calls-env-builtin.txt
+-1.188993e-03 not-calls-export.txt
+1.085578e+00 not-calls-external.txt
+-6.226182e-02 not-calls-fail2.txt
+-1.156569e-03 not-calls-mkdir.txt
+-1.594067e-03 not-calls-rm.txt

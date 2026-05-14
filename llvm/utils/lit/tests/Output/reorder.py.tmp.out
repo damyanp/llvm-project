@@ -1,0 +1,16 @@
+-- Testing: 5 tests, 1 workers --
+FAIL: reorder :: fff.txt (1 of 5)
+PASS: reorder :: subdir/ccc.txt (2 of 5)
+PASS: reorder :: bbb.txt (3 of 5)
+PASS: reorder :: aaa.txt (4 of 5)
+PASS: reorder :: new-test.txt (5 of 5)
+********************
+Failed Tests (1):
+  reorder :: fff.txt
+
+
+Testing Time: 0.02s
+
+Total Discovered Tests: 5
+  Passed: 4 (80.00%)
+  Failed: 1 (20.00%)

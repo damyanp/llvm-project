@@ -1,0 +1,5 @@
+-4.864693e-03 absolute-paths.txt
+-3.814936e-02 env.txt
+-8.311272e-04 file-does-not-exist.txt
+-1.887083e-03 relative-paths.txt
+-1.707077e-03 two-same-line.txt

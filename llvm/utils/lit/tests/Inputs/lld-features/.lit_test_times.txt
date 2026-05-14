@@ -1,0 +1,4 @@
+6.896734e-03 ld.lld.txt
+2.832413e-03 ld64.lld.txt
+1.883268e-03 lld-link.txt
+5.065441e-03 wasm-ld.txt

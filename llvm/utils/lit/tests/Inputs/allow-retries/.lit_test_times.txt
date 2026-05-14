@@ -1,0 +1,4 @@
+1.506360e-01 succeeds-within-limit.py
+-1.057529e-02 does-not-succeed-within-limit.py
+-9.696484e-04 more-than-one-allow-retries-lines.py
+-8.904934e-04 not-a-valid-integer.py

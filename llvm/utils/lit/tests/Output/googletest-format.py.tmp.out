@@ -1,0 +1,45 @@
+-- Testing: 6 tests, 1 workers --
+PASS: googletest-format :: DummySubDir/OneTest.py/1/6 (1 of 6)
+PASS: googletest-format :: DummySubDir/OneTest.py/2/6 (2 of 6)
+PASS: googletest-format :: DummySubDir/OneTest.py/3/6 (3 of 6)
+FAIL: googletest-format :: DummySubDir/OneTest.py/0/6 (4 of 6)
+******************** TEST 'googletest-format :: DummySubDir/OneTest.py/0/6' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py-googletest-format-5017-0-6.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=6 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py
+--
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestB
+--
+I am subTest B output
+
+I am subTest B, I FAIL
+And I have two lines of output
+
+Script:
+--
+/usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py --gtest_filter=FirstTest.subTestD
+--
+unresolved test result
+
+********************
+PASS: googletest-format :: DummySubDir/OneTest.py/5/6 (5 of 6)
+PASS: googletest-format :: DummySubDir/OneTest.py/4/6 (6 of 6)
+********************
+Unresolved Tests (1):
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestD
+
+********************
+Failed Tests (1):
+  googletest-format :: DummySubDir/OneTest.py/FirstTest/subTestB
+
+
+Testing Time: 0.24s
+
+Total Discovered Tests: 6
+  Skipped   : 1 (16.67%)
+  Passed    : 3 (50.00%)
+  Unresolved: 1 (16.67%)
+  Failed    : 1 (16.67%)

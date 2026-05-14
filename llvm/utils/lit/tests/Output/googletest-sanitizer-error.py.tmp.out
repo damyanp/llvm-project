@@ -1,0 +1,27 @@
+-- Testing: 1 tests, 1 workers --
+FAIL: googletest-sanitizer-error :: DummySubDir/OneTest.py/0/1 (1 of 1)
+******************** TEST 'googletest-sanitizer-error :: DummySubDir/OneTest.py/0/1' FAILED ********************
+Script(shard):
+--
+GTEST_OUTPUT=json:/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-sanitizer-error/DummySubDir/OneTest.py-googletest-sanitizer-error-5071-0-1.json GTEST_SHUFFLE=1 GTEST_TOTAL_SHARDS=1 GTEST_SHARD_INDEX=0 GTEST_RANDOM_SEED=123 /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/googletest-sanitizer-error/DummySubDir/OneTest.py
+--
+
+
+[ RUN      ] FirstTest.subTestA
+[       OK ] FirstTest.subTestA (8 ms)
+
+--
+exit: 1
+--
+
+********************
+********************
+Failed Tests (1):
+  googletest-sanitizer-error :: DummySubDir/OneTest.py/0/1
+
+
+Testing Time: 0.05s
+
+Total Discovered Tests: 2
+  Passed: 1 (50.00%)
+  Failed: 1 (50.00%)

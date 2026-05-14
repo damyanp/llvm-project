@@ -1,0 +1,2 @@
+lit.py: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/discovery.py:273: warning: input 'Inputs/standalone-tests' contained no tests
+error: did not discover any tests for provided path(s)

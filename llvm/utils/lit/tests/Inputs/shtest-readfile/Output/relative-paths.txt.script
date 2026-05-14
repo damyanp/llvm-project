@@ -1,0 +1,4 @@
+set -o pipefail;set -x;{ { set +x; } 2>/dev/null && echo 'mkdir -p rel_path_test_folder' \# 'RUN: at line 2' >&2 && { set -x; } 2>/dev/null && {   mkdir -p rel_path_test_folder; }; } &&
+{ { set +x; } 2>/dev/null && echo 'echo -n "hello" > rel_path_test_folder/test_file' \# 'RUN: at line 3' >&2 && { set -x; } 2>/dev/null && {   echo -n "hello" > rel_path_test_folder/test_file; }; } &&
+{ { set +x; } 2>/dev/null && echo 'echo $(cat rel_path_test_folder/test_file) && test -e rel_path_test_folder/test_file' \# 'RUN: at line 4' >&2 && { set -x; } 2>/dev/null && {   echo $(cat rel_path_test_folder/test_file) && test -e rel_path_test_folder/test_file; }; } &&
+{ { set +x; } 2>/dev/null && echo 'not echo return' \# 'RUN: at line 7' >&2 && { set -x; } 2>/dev/null && {   not echo return; }; }

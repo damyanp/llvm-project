@@ -1,0 +1,6 @@
+-3.692174e-02 DummySubDir/OneTest.py/4/6
+-3.414679e-02 DummySubDir/OneTest.py/1/6
+-3.801584e-02 DummySubDir/OneTest.py/5/6
+-3.575206e-02 DummySubDir/OneTest.py/3/6
+-3.548694e-02 DummySubDir/OneTest.py/0/6
+-3.691936e-02 DummySubDir/OneTest.py/2/6

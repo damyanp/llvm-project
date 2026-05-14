@@ -1,0 +1,4 @@
+-1.015878e-02 popd-args.txt
+-8.356571e-04 popd-no-stack.txt
+1.019943e-01 pushd-popd-ok.txt
+-7.526875e-04 pushd-too-many-args.txt

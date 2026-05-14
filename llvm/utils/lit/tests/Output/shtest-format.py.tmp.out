@@ -1,0 +1,238 @@
+-- Testing: 22 tests, 1 workers --
+FAIL: shtest-format :: external_shell/fail.txt (1 of 22)
+******************** TEST 'shtest-format :: external_shell/fail.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+line 1: failed test output on stdout
+line 2: failed test output on stdout
+
+--
+Command Output (stderr):
+--
+echo "line 1: failed test output on stdout" # RUN: at line 3
++ echo 'line 1: failed test output on stdout'
+echo "line 2: failed test output on stdout" # RUN: at line 4
++ echo 'line 2: failed test output on stdout'
+cat "does-not-exist" # RUN: at line 5
++ cat does-not-exist
+cat: does-not-exist: No such file or directory
+
+--
+
+********************
+FAIL: shtest-format :: external_shell/fail_with_bad_encoding.txt (2 of 22)
+******************** TEST 'shtest-format :: external_shell/fail_with_bad_encoding.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+a line with bad encoding: �.
+--
+Command Output (stderr):
+--
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py # RUN: at line 3
++ /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py
+false # RUN: at line 4
++ false
+
+--
+
+********************
+FAIL: shtest-format :: external_shell/fail_with_control_chars.txt (3 of 22)
+******************** TEST 'shtest-format :: external_shell/fail_with_control_chars.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+a line with [2;30;41mcontrol characters[0m.
+
+--
+Command Output (stderr):
+--
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-control-chars.py # RUN: at line 4
++ /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-control-chars.py
+
+--
+
+********************
+PASS: shtest-format :: external_shell/pass.txt (4 of 22)
+PASS: shtest-format :: external_shell/utf8_command.txt (5 of 22)
+FAIL: shtest-format :: fail.txt (6 of 22)
+******************** TEST 'shtest-format :: fail.txt' FAILED ********************
+Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+printf "line 1: failed test output on stdout\nline 2: failed test output on stdout"
+# executed command: printf 'line 1: failed test output on stdout\nline 2: failed test output on stdout'
+# .---command stdout------------
+# | line 1: failed test output on stdout
+# | line 2: failed test output on stdout
+# `-----------------------------
+# RUN: at line 2
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+
+********************
+UNRESOLVED: shtest-format :: no-test-line.txt (7 of 22)
+******************** TEST 'shtest-format :: no-test-line.txt' FAILED ********************
+Test has no 'RUN:' line
+********************
+PASS: shtest-format :: pass.txt (8 of 22)
+UNSUPPORTED: shtest-format :: requires-missing.txt (9 of 22)
+PASS: shtest-format :: requires-present.txt (10 of 22)
+UNRESOLVED: shtest-format :: requires-star.txt (11 of 22)
+******************** TEST 'shtest-format :: requires-star.txt' FAILED ********************
+Exception during script execution:
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 32, in evaluate
+    return parser.parseAll()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 151, in parseAll
+    self.token = next(self.tokens)
+                 ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 62, in tokenize
+    raise ValueError("couldn't parse text: %r" % string)
+ValueError: couldn't parse text: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 392, in getMissingRequiredFeaturesFromList
+    if not BooleanExpression.evaluate(item, features)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 34, in evaluate
+    raise ValueError(str(e) + ("\nin expression: %r" % string))
+ValueError: couldn't parse text: '*'
+in expression: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/worker.py", line 77, in _execute_test_handle_errors
+    result = test.config.test_format.execute(test, lit_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/formats/shtest.py", line 29, in execute
+    return lit.TestRunner.executeShTest(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2449, in executeShTest
+    parsed = parseIntegratedTestScript(test, require_script=not script)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2308, in parseIntegratedTestScript
+    missing_required_features = test.getMissingRequiredFeatures()
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 406, in getMissingRequiredFeatures
+    return self.getMissingRequiredFeaturesFromList(features)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 395, in getMissingRequiredFeaturesFromList
+    raise ValueError("Error in REQUIRES list:\n%s" % str(e))
+ValueError: Error in REQUIRES list:
+couldn't parse text: '*'
+in expression: '*'
+
+
+********************
+PASS: shtest-format :: requires-triple.txt (12 of 22)
+PASS: shtest-format :: unsupported-expr-false.txt (13 of 22)
+UNSUPPORTED: shtest-format :: unsupported-expr-true.txt (14 of 22)
+UNRESOLVED: shtest-format :: unsupported-star.txt (15 of 22)
+******************** TEST 'shtest-format :: unsupported-star.txt' FAILED ********************
+Exception during script execution:
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 32, in evaluate
+    return parser.parseAll()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 151, in parseAll
+    self.token = next(self.tokens)
+                 ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 62, in tokenize
+    raise ValueError("couldn't parse text: %r" % string)
+ValueError: couldn't parse text: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 423, in getUnsupportedFeatures
+    if BooleanExpression.evaluate(item, features)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 34, in evaluate
+    raise ValueError(str(e) + ("\nin expression: %r" % string))
+ValueError: couldn't parse text: '*'
+in expression: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/worker.py", line 77, in _execute_test_handle_errors
+    result = test.config.test_format.execute(test, lit_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/formats/shtest.py", line 29, in execute
+    return lit.TestRunner.executeShTest(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2449, in executeShTest
+    parsed = parseIntegratedTestScript(test, require_script=not script)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2317, in parseIntegratedTestScript
+    unsupported_features = test.getUnsupportedFeatures()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 426, in getUnsupportedFeatures
+    raise ValueError("Error in UNSUPPORTED list:\n%s" % str(e))
+ValueError: Error in UNSUPPORTED list:
+couldn't parse text: '*'
+in expression: '*'
+
+
+********************
+UNSUPPORTED: shtest-format :: unsupported_dir/some-test.txt (16 of 22)
+PASS: shtest-format :: xfail-expr-false.txt (17 of 22)
+XFAIL: shtest-format :: xfail-expr-true.txt (18 of 22)
+XFAIL: shtest-format :: xfail-feature.txt (19 of 22)
+XFAIL: shtest-format :: xfail-target.txt (20 of 22)
+XFAIL: shtest-format :: xfail.txt (21 of 22)
+XPASS: shtest-format :: xpass.txt (22 of 22)
+******************** TEST 'shtest-format :: xpass.txt' FAILED ********************
+Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 1
+true
+# executed command: true
+
+--
+
+********************
+********************
+Unresolved Tests (3):
+  shtest-format :: no-test-line.txt
+  shtest-format :: requires-star.txt
+  shtest-format :: unsupported-star.txt
+
+********************
+Failed Tests (4):
+  shtest-format :: external_shell/fail.txt
+  shtest-format :: external_shell/fail_with_bad_encoding.txt
+  shtest-format :: external_shell/fail_with_control_chars.txt
+  shtest-format :: fail.txt
+
+********************
+Unexpectedly Passed Tests (1):
+  shtest-format :: xpass.txt
+
+
+Testing Time: 0.10s
+
+Total Discovered Tests: 22
+  Unsupported        : 3 (13.64%)
+  Passed             : 7 (31.82%)
+  Expectedly Failed  : 4 (18.18%)
+  Unresolved         : 3 (13.64%)
+  Failed             : 4 (18.18%)
+  Unexpectedly Passed: 1 (4.55%)

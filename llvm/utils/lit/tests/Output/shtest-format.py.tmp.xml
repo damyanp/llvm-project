@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="0.10">
+<testsuite name="shtest-format" tests="22" failures="8" skipped="3" time="0.08">
+<testcase classname="shtest-format.external_shell" name="fail.txt" time="0.01">
+  <failure><![CDATA[Exit Code: 1
+
+Command Output (stdout):
+--
+line 1: failed test output on stdout
+line 2: failed test output on stdout
+
+--
+Command Output (stderr):
+--
+echo "line 1: failed test output on stdout" # RUN: at line 3
++ echo 'line 1: failed test output on stdout'
+echo "line 2: failed test output on stdout" # RUN: at line 4
++ echo 'line 2: failed test output on stdout'
+cat "does-not-exist" # RUN: at line 5
++ cat does-not-exist
+cat: does-not-exist: No such file or directory
+
+--
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.external_shell" name="fail_with_bad_encoding.txt" time="0.03">
+  <failure><![CDATA[Exit Code: 1
+
+Command Output (stdout):
+--
+a line with bad encoding: �.
+--
+Command Output (stderr):
+--
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py # RUN: at line 3
++ /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py
+false # RUN: at line 4
++ false
+
+--
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.external_shell" name="fail_with_control_chars.txt" time="0.03">
+  <failure><![CDATA[Exit Code: 1
+
+Command Output (stdout):
+--
+a line with [2;30;41mcontrol characters[0m.
+
+--
+Command Output (stderr):
+--
+"/usr/bin/python3" /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-control-chars.py # RUN: at line 4
++ /usr/bin/python3 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/shtest-format/external_shell/write-control-chars.py
+
+--
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.external_shell" name="pass.txt" time="0.00"/>
+<testcase classname="shtest-format.external_shell" name="utf8_command.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="fail.txt" time="0.00">
+  <failure><![CDATA[Exit Code: 1
+
+Command Output (stdout):
+--
+# RUN: at line 1
+printf "line 1: failed test output on stdout\nline 2: failed test output on stdout"
+# executed command: printf 'line 1: failed test output on stdout\nline 2: failed test output on stdout'
+# .---command stdout------------
+# | line 1: failed test output on stdout
+# | line 2: failed test output on stdout
+# `-----------------------------
+# RUN: at line 2
+false
+# executed command: false
+# note: command had no output on stdout or stderr
+# error: command failed with exit status: 1
+
+--
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="no-test-line.txt" time="0.00">
+  <failure><![CDATA[Test has no 'RUN:' line]]></failure>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="pass.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="requires-missing.txt" time="0.00">
+  <skipped message="Missing required feature(s): a-missing-feature"/>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="requires-present.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="requires-star.txt" time="0.00">
+  <failure><![CDATA[Exception during script execution:
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 32, in evaluate
+    return parser.parseAll()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 151, in parseAll
+    self.token = next(self.tokens)
+                 ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 62, in tokenize
+    raise ValueError("couldn't parse text: %r" % string)
+ValueError: couldn't parse text: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 392, in getMissingRequiredFeaturesFromList
+    if not BooleanExpression.evaluate(item, features)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 34, in evaluate
+    raise ValueError(str(e) + ("\nin expression: %r" % string))
+ValueError: couldn't parse text: '*'
+in expression: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/worker.py", line 77, in _execute_test_handle_errors
+    result = test.config.test_format.execute(test, lit_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/formats/shtest.py", line 29, in execute
+    return lit.TestRunner.executeShTest(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2449, in executeShTest
+    parsed = parseIntegratedTestScript(test, require_script=not script)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2308, in parseIntegratedTestScript
+    missing_required_features = test.getMissingRequiredFeatures()
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 406, in getMissingRequiredFeatures
+    return self.getMissingRequiredFeaturesFromList(features)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 395, in getMissingRequiredFeaturesFromList
+    raise ValueError("Error in REQUIRES list:\n%s" % str(e))
+ValueError: Error in REQUIRES list:
+couldn't parse text: '*'
+in expression: '*'
+
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="requires-triple.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="unsupported-expr-false.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="unsupported-expr-true.txt" time="0.00">
+  <skipped message="Unsupported configuration"/>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="unsupported-star.txt" time="0.00">
+  <failure><![CDATA[Exception during script execution:
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 32, in evaluate
+    return parser.parseAll()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 151, in parseAll
+    self.token = next(self.tokens)
+                 ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 62, in tokenize
+    raise ValueError("couldn't parse text: %r" % string)
+ValueError: couldn't parse text: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 423, in getUnsupportedFeatures
+    if BooleanExpression.evaluate(item, features)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/BooleanExpression.py", line 34, in evaluate
+    raise ValueError(str(e) + ("\nin expression: %r" % string))
+ValueError: couldn't parse text: '*'
+in expression: '*'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/worker.py", line 77, in _execute_test_handle_errors
+    result = test.config.test_format.execute(test, lit_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/formats/shtest.py", line 29, in execute
+    return lit.TestRunner.executeShTest(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2449, in executeShTest
+    parsed = parseIntegratedTestScript(test, require_script=not script)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/TestRunner.py", line 2317, in parseIntegratedTestScript
+    unsupported_features = test.getUnsupportedFeatures()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/llvm-project/llvm-project/llvm/utils/lit/lit/Test.py", line 426, in getUnsupportedFeatures
+    raise ValueError("Error in UNSUPPORTED list:\n%s" % str(e))
+ValueError: Error in UNSUPPORTED list:
+couldn't parse text: '*'
+in expression: '*'
+
+]]></failure>
+</testcase>
+<testcase classname="shtest-format.unsupported_dir" name="some-test.txt" time="0.00">
+  <skipped message="Unsupported configuration"/>
+</testcase>
+<testcase classname="shtest-format.shtest-format" name="xfail-expr-false.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="xfail-expr-true.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="xfail-feature.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="xfail-target.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="xfail.txt" time="0.00"/>
+<testcase classname="shtest-format.shtest-format" name="xpass.txt" time="0.00">
+  <failure><![CDATA[Exit Code: 0
+
+Command Output (stdout):
+--
+# RUN: at line 1
+true
+# executed command: true
+
+--
+]]></failure>
+</testcase>
+</testsuite>
+</testsuites>

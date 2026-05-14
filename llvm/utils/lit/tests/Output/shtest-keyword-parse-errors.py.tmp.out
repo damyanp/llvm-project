@@ -1,0 +1,24 @@
+-- Testing: 3 tests, 1 workers --
+UNRESOLVED: shtest-keyword-parse-errors :: empty.txt (1 of 3)
+******************** TEST 'shtest-keyword-parse-errors :: empty.txt' FAILED ********************
+Test has no 'RUN:' line
+********************
+UNRESOLVED: shtest-keyword-parse-errors :: multiple-allow-retries.txt (2 of 3)
+******************** TEST 'shtest-keyword-parse-errors :: multiple-allow-retries.txt' FAILED ********************
+Test has more than one ALLOW_RETRIES lines
+********************
+UNRESOLVED: shtest-keyword-parse-errors :: unterminated-run.txt (3 of 3)
+******************** TEST 'shtest-keyword-parse-errors :: unterminated-run.txt' FAILED ********************
+Test has unterminated 'RUN:' directive (with '\') at line 1
+********************
+********************
+Unresolved Tests (3):
+  shtest-keyword-parse-errors :: empty.txt
+  shtest-keyword-parse-errors :: multiple-allow-retries.txt
+  shtest-keyword-parse-errors :: unterminated-run.txt
+
+
+Testing Time: 0.01s
+
+Total Discovered Tests: 3
+  Unresolved: 3 (100.00%)

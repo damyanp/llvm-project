@@ -1,0 +1,2 @@
+6.391048e-03 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/discovery-getTestsForPath/one.test
+1.843214e-03 /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/discovery-getTestsForPath/two.test

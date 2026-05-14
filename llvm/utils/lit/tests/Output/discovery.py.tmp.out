@@ -1,0 +1,8 @@
+-- Test Suites --
+  exec-discovery-in-tree-suite - 1 tests
+    Source Root: /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/exec-discovery-in-tree
+    Exec Root  : /home/runner/work/llvm-project/llvm-project/llvm/utils/lit/tests/Inputs/exec-discovery-in-tree/obj
+    Available Features: 
+    Available Substitutions: 
+-- Available Tests --
+  exec-discovery-in-tree-suite :: test-one.txt

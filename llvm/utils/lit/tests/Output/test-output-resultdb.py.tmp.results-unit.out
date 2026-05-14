@@ -1,0 +1,23 @@
+{
+  "__version__": [
+    23,
+    0,
+    0
+  ],
+  "elapsed": 0.060184478759765625,
+  "tests": [
+    {
+      "artifacts": {
+        "artifact-content-in-request": {
+          "contents": ""
+        }
+      },
+      "duration": "0.001000000s",
+      "expected": true,
+      "start_time": "2026-05-14T05:14:34.037188Z",
+      "status": "PASS",
+      "summary_html": "<p><text-artifact artifact-id=\"artifact-content-in-request\"></p>",
+      "testId": "googletest-cmd-wrapper :: DummySubDir/OneTest.exe/FirstTest/subTestA"
+    }
+  ]
+}

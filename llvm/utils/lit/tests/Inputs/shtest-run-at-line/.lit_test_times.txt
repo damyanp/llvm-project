@@ -1,0 +1,8 @@
+-6.946802e-03 external-shell/basic.txt
+-5.465984e-03 external-shell/empty-run-line.txt
+-1.053262e-02 external-shell/line-continuation.txt
+-5.395174e-03 external-shell/run-line-with-newline.txt
+-5.364704e-02 internal-shell/basic.txt
+-7.209063e-03 internal-shell/empty-run-line.txt
+-3.167558e-02 internal-shell/line-continuation.txt
+-8.382082e-03 internal-shell/run-line-with-newline.txt

@@ -1,0 +1,29 @@
+-- Testing: 5 tests, 1 workers --
+Testing: 
+FAIL: verbosity :: fail.txt (1 of 5)
+Testing:  0.. 10.. 20.. 30.. 40.. 50..
+PASS: verbosity :: pass.txt (2 of 5)
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 
+UNSUPPORTED: verbosity :: unsupported.txt (3 of 5)
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.
+XFAIL: verbosity :: xfail.txt (4 of 5)
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.. 80..
+XPASS: verbosity :: xpass.txt (5 of 5)
+Testing:  0.. 10.. 20.. 30.. 40.. 50.. 60.. 70.. 80.. 90.. 
+********************
+Failed Tests (1):
+  verbosity :: fail.txt
+
+********************
+Unexpectedly Passed Tests (1):
+  verbosity :: xpass.txt
+
+
+Testing Time: 0.02s
+
+Total Discovered Tests: 5
+  Unsupported        : 1 (20.00%)
+  Passed             : 1 (20.00%)
+  Expectedly Failed  : 1 (20.00%)
+  Failed             : 1 (20.00%)
+  Unexpectedly Passed: 1 (20.00%)

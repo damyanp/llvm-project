@@ -1,0 +1,14 @@
+-5.743337e-02 diff-bail.test
+-5.645823e-02 diff-bail2.test
+-5.808592e-02 diff-expected.test
+-5.406404e-02 diff-tmp-dir.test
+-6.838226e-02 diff-tmp.test
+-6.621122e-02 multiple-split-file-populated.test
+-5.720353e-02 multiple-split-file.test
+-5.719352e-02 single-split-file-no-expected.test
+-5.755353e-02 single-split-file-populated.test
+-5.783844e-02 single-split-file.test
+-5.474687e-02 split whitespace.test
+-5.416632e-02 split-both.test
+-5.761361e-02 split-c-comments.test
+-5.662441e-02 unrelated-split.test

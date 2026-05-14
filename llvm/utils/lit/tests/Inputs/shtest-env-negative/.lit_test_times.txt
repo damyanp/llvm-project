@@ -1,0 +1,7 @@
+-3.094673e-03 env-calls-cd.txt
+-8.642673e-04 env-calls-colon.txt
+-5.774498e-04 env-calls-echo.txt
+-4.460812e-04 env-calls-export.txt
+-4.389286e-04 env-calls-mkdir.txt
+-7.612705e-04 env-calls-not-builtin.txt
+-6.945133e-04 env-calls-rm.txt

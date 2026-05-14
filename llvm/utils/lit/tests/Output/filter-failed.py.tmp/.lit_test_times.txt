@@ -1,0 +1,5 @@
+-7.032633e-03 fail.txt
+1.793861e-03 pass.txt
+-1.528263e-04 unresolved.txt
+2.173662e-03 xfail.txt
+-1.960993e-03 xpass.txt

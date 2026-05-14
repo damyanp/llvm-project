@@ -1,0 +1,2 @@
+set -o pipefail;set -x;{ { set +x; } 2>/dev/null && echo 'RUN: at line 2' has no command after substitutions >&2 && { set -x; } 2>/dev/null; } &&
+{ { set +x; } 2>/dev/null && echo false \# 'RUN: at line 3' >&2 && { set -x; } 2>/dev/null && {   false; }; }
