@@ -11,6 +11,7 @@
 //===----------------------------------------------------------------------===//
 
 include "llvm/TableGen/SearchableTable.td"
+include "llvm/BinaryFormat/SPIRVEnumValues.td"
 
 //===----------------------------------------------------------------------===//
 // Lookup table containing symbolic operands with the following columns:
@@ -869,51 +870,42 @@ defm FPFastMathDefault : ExecutionModeOperand<6028, [FloatControls2]>;
 defm MaximallyReconvergesKHR : ExecutionModeOperand<6023, [Shader]>;
 
 //===----------------------------------------------------------------------===//
-// Multiclass used to define StorageClass enum values and at the same time
-// SymbolicOperand entries with string mnemonics and capabilities.
+// StorageClass operands use shared enum values to define SymbolicOperand
+// entries with string mnemonics and capabilities.
 //===----------------------------------------------------------------------===//
 
-def StorageClass : GenericEnum, Operand<i32> {
-  let FilterClass = "StorageClass";
-  let NameField = "Name";
-  let ValueField = "Value";
-  let PrintMethod = !strconcat("printSymbolicOperand<OperandCategory::", FilterClass, "Operand>");
+def StorageClass : Operand<i32> {
+  let PrintMethod = "printSymbolicOperand<OperandCategory::StorageClassOperand>";
 }
 
-class StorageClass<string name, bits<32> value> {
-  string Name = name;
-  bits<32> Value = value;
-}
-
-multiclass StorageClassOperand<bits<32> value, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
-  def : StorageClass<NAME, value>;
-  defm : SymbolicOperandWithRequirements<StorageClassOperand, value, NAME, 0, 0,
+multiclass StorageClassOperand<StorageClass enumerant, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
+  defm : SymbolicOperandWithRequirements<StorageClassOperand, enumerant.Value, enumerant.Name, 0, 0,
                                          reqExtensions, reqCapabilities, []>;
 }
 
-defm UniformConstant : StorageClassOperand<0, [], []>;
-defm Input : StorageClassOperand<1, [], []>;
-defm Uniform : StorageClassOperand<2, [], [Shader]>;
-defm Output : StorageClassOperand<3, [], [Shader]>;
-defm Workgroup : StorageClassOperand<4, [], []>;
-defm CrossWorkgroup : StorageClassOperand<5, [], []>;
-defm Private : StorageClassOperand<6, [], [Shader]>;
-defm Function : StorageClassOperand<7, [], []>;
-defm Generic : StorageClassOperand<8, [], [GenericPointer]>;
-defm PushConstant : StorageClassOperand<9, [], [Shader]>;
-defm AtomicCounter : StorageClassOperand<10, [], [AtomicStorage]>;
-defm Image : StorageClassOperand<11, [], []>;
-defm StorageBuffer : StorageClassOperand<12, [], [Shader]>;
-defm CallableDataNV : StorageClassOperand<5328, [], [RayTracingNV]>;
-defm IncomingCallableDataNV : StorageClassOperand<5329, [], [RayTracingNV]>;
-defm RayPayloadNV : StorageClassOperand<5338, [], [RayTracingNV]>;
-defm HitAttributeNV : StorageClassOperand<5339, [], [RayTracingNV]>;
-defm IncomingRayPayloadNV : StorageClassOperand<5342, [], [RayTracingNV]>;
-defm ShaderRecordBufferNV : StorageClassOperand<5343, [], [RayTracingNV]>;
-defm PhysicalStorageBufferEXT : StorageClassOperand<5349, [], [PhysicalStorageBufferAddressesEXT]>;
-defm CodeSectionINTEL : StorageClassOperand<5605, [SPV_INTEL_function_pointers], [FunctionPointersINTEL]>;
-defm DeviceOnlyINTEL : StorageClassOperand<5936, [SPV_INTEL_usm_storage_classes], [USMStorageClassesINTEL]>;
-defm HostOnlyINTEL : StorageClassOperand<5937, [SPV_INTEL_usm_storage_classes], [USMStorageClassesINTEL]>;
+defm UniformConstant : StorageClassOperand<SPIRVStorageClassUniformConstant, [], []>;
+defm Input : StorageClassOperand<SPIRVStorageClassInput, [], []>;
+defm Uniform : StorageClassOperand<SPIRVStorageClassUniform, [], [Shader]>;
+defm Output : StorageClassOperand<SPIRVStorageClassOutput, [], [Shader]>;
+defm Workgroup : StorageClassOperand<SPIRVStorageClassWorkgroup, [], []>;
+defm CrossWorkgroup : StorageClassOperand<SPIRVStorageClassCrossWorkgroup, [], []>;
+defm Private : StorageClassOperand<SPIRVStorageClassPrivate, [], [Shader]>;
+defm Function : StorageClassOperand<SPIRVStorageClassFunction, [], []>;
+defm Generic : StorageClassOperand<SPIRVStorageClassGeneric, [], [GenericPointer]>;
+defm PushConstant : StorageClassOperand<SPIRVStorageClassPushConstant, [], [Shader]>;
+defm AtomicCounter : StorageClassOperand<SPIRVStorageClassAtomicCounter, [], [AtomicStorage]>;
+defm Image : StorageClassOperand<SPIRVStorageClassImage, [], []>;
+defm StorageBuffer : StorageClassOperand<SPIRVStorageClassStorageBuffer, [], [Shader]>;
+defm CallableDataNV : StorageClassOperand<SPIRVStorageClassCallableDataNV, [], [RayTracingNV]>;
+defm IncomingCallableDataNV : StorageClassOperand<SPIRVStorageClassIncomingCallableDataNV, [], [RayTracingNV]>;
+defm RayPayloadNV : StorageClassOperand<SPIRVStorageClassRayPayloadNV, [], [RayTracingNV]>;
+defm HitAttributeNV : StorageClassOperand<SPIRVStorageClassHitAttributeNV, [], [RayTracingNV]>;
+defm IncomingRayPayloadNV : StorageClassOperand<SPIRVStorageClassIncomingRayPayloadNV, [], [RayTracingNV]>;
+defm ShaderRecordBufferNV : StorageClassOperand<SPIRVStorageClassShaderRecordBufferNV, [], [RayTracingNV]>;
+defm PhysicalStorageBufferEXT : StorageClassOperand<SPIRVStorageClassPhysicalStorageBufferEXT, [], [PhysicalStorageBufferAddressesEXT]>;
+defm CodeSectionINTEL : StorageClassOperand<SPIRVStorageClassCodeSectionINTEL, [SPV_INTEL_function_pointers], [FunctionPointersINTEL]>;
+defm DeviceOnlyINTEL : StorageClassOperand<SPIRVStorageClassDeviceOnlyINTEL, [SPV_INTEL_usm_storage_classes], [USMStorageClassesINTEL]>;
+defm HostOnlyINTEL : StorageClassOperand<SPIRVStorageClassHostOnlyINTEL, [SPV_INTEL_usm_storage_classes], [USMStorageClassesINTEL]>;
 
 //===----------------------------------------------------------------------===//
 // Multiclass used to define Dim enum values and at the same time
@@ -1344,228 +1336,213 @@ defm NoWrite : FunctionParameterAttributeOperand<6, [Kernel]>;
 defm NoReadWrite : FunctionParameterAttributeOperand<7, [Kernel]>;
 
 //===----------------------------------------------------------------------===//
-// Multiclass used to define Decoration enum values and at the same time
-// SymbolicOperand entries with string mnemonics, versioning, extensions and
-// capabilities.
+// Decoration operands use shared enum values to define SymbolicOperand entries
+// with string mnemonics, versioning, extensions and capabilities.
 //===----------------------------------------------------------------------===//
 
-def Decoration : GenericEnum, Operand<i32> {
-  let FilterClass = "Decoration";
-  let NameField = "Name";
-  let ValueField = "Value";
-  let PrintMethod = !strconcat("printSymbolicOperand<OperandCategory::", FilterClass, "Operand>");
+def Decoration : Operand<i32> {
+  let PrintMethod = "printSymbolicOperand<OperandCategory::DecorationOperand>";
 }
 
-class Decoration<string name, bits<32> value> {
-  string Name = name;
-  bits<32> Value = value;
-}
-
-multiclass DecorationOperand<bits<32> value, bits<32> minVersion, bits<32> maxVersion, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
-  def : Decoration<NAME, value>;
-  defm : SymbolicOperandWithRequirements<DecorationOperand, value, NAME,
+multiclass DecorationOperand<Decoration enumerant, bits<32> minVersion, bits<32> maxVersion, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
+  defm : SymbolicOperandWithRequirements<DecorationOperand, enumerant.Value, enumerant.Name,
                                          minVersion, maxVersion, reqExtensions,
                                          reqCapabilities, []>;
 }
 
-defm RelaxedPrecision : DecorationOperand<0, 0, 0, [], [Shader]>;
-defm SpecId : DecorationOperand<1, 0, 0, [], [Shader, Kernel]>;
-defm Block : DecorationOperand<2, 0, 0, [], [Shader]>;
-defm BufferBlock : DecorationOperand<3, 0, 0, [], [Shader]>;
-defm RowMajor : DecorationOperand<4, 0, 0, [], [Matrix]>;
-defm ColMajor : DecorationOperand<5, 0, 0, [], [Matrix]>;
-defm ArrayStride : DecorationOperand<6, 0, 0, [], [Shader]>;
-defm MatrixStride : DecorationOperand<7, 0, 0, [], [Matrix]>;
-defm GLSLShared : DecorationOperand<8, 0, 0, [], [Shader]>;
-defm GLSLPacked : DecorationOperand<9, 0, 0, [], [Shader]>;
-defm CPacked : DecorationOperand<10, 0, 0, [], [Kernel]>;
-defm BuiltIn : DecorationOperand<11, 0, 0, [], []>;
-defm NoPerspective : DecorationOperand<13, 0, 0, [], [Shader]>;
-defm Flat : DecorationOperand<14, 0, 0, [], [Shader]>;
-defm Patch : DecorationOperand<15, 0, 0, [], [Tessellation]>;
-defm Centroid : DecorationOperand<16, 0, 0, [], [Shader]>;
-defm Sample : DecorationOperand<17, 0, 0, [], [SampleRateShading]>;
-defm Invariant : DecorationOperand<18, 0, 0, [], [Shader]>;
-defm Restrict : DecorationOperand<19, 0, 0, [], []>;
-defm Aliased : DecorationOperand<20, 0, 0, [], []>;
-defm Volatile : DecorationOperand<21, 0, 0, [], []>;
-defm Constant : DecorationOperand<22, 0, 0, [], [Kernel]>;
-defm Coherent : DecorationOperand<23, 0, 0, [], []>;
-defm NonWritable : DecorationOperand<24, 0, 0, [], []>;
-defm NonReadable : DecorationOperand<25, 0, 0, [], []>;
-defm Uniform : DecorationOperand<26, 0, 0, [], [Shader]>;
-defm UniformId : DecorationOperand<27, 0, 0, [], [Shader]>;
-defm SaturatedConversion : DecorationOperand<28, 0, 0, [], [Kernel]>;
-defm Stream : DecorationOperand<29, 0, 0, [], [GeometryStreams]>;
-defm Location : DecorationOperand<30, 0, 0, [], [Shader]>;
-defm Component : DecorationOperand<31, 0, 0, [], [Shader]>;
-defm Index : DecorationOperand<32, 0, 0, [], [Shader]>;
-defm Binding : DecorationOperand<33, 0, 0, [], [Shader]>;
-defm DescriptorSet : DecorationOperand<34, 0, 0, [], [Shader]>;
-defm Offset : DecorationOperand<35, 0, 0, [], [Shader]>;
-defm XfbBuffer : DecorationOperand<36, 0, 0, [], [TransformFeedback]>;
-defm XfbStride : DecorationOperand<37, 0, 0, [], [TransformFeedback]>;
-defm FuncParamAttr : DecorationOperand<38, 0, 0, [], [Kernel]>;
-defm FPRoundingMode : DecorationOperand<39, 0, 0, [], []>;
-defm FPFastMathMode : DecorationOperand<40, 0, 0, [], [Kernel, FloatControls2]>;
-defm LinkageAttributes : DecorationOperand<41, 0, 0, [], [Linkage]>;
-defm NoContraction : DecorationOperand<42, 0, 0, [], [Shader]>;
-defm InputAttachmentIndex : DecorationOperand<43, 0, 0, [], [InputAttachment]>;
-defm Alignment : DecorationOperand<44, 0, 0, [], [Kernel]>;
-defm MaxByteOffset : DecorationOperand<45, 0x10100, 0, [], [Addresses]>;
-defm AlignmentId : DecorationOperand<46, 0, 0, [], [Kernel]>;
-defm MaxByteOffsetId : DecorationOperand<47, 0, 0, [], [Addresses]>;
-defm NoSignedWrap : DecorationOperand<4469, 0x10400, 0, [SPV_KHR_no_integer_wrap_decoration], []>;
-defm NoUnsignedWrap : DecorationOperand<4470, 0x10400, 0, [SPV_KHR_no_integer_wrap_decoration], []>;
-defm ExplicitInterpAMD : DecorationOperand<4999, 0, 0, [], []>;
-defm OverrideCoverageNV : DecorationOperand<5248, 0, 0, [], [SampleMaskOverrideCoverageNV]>;
-defm PassthroughNV : DecorationOperand<5250, 0, 0, [], [GeometryShaderPassthroughNV]>;
-defm ViewportRelativeNV : DecorationOperand<5252, 0, 0, [], [ShaderViewportMaskNV]>;
-defm SecondaryViewportRelativeNV : DecorationOperand<5256, 0, 0, [], [ShaderStereoViewNV]>;
-defm PerPrimitiveNV : DecorationOperand<5271, 0, 0, [], [MeshShadingNV]>;
-defm PerViewNV : DecorationOperand<5272, 0, 0, [], [MeshShadingNV]>;
-defm PerVertexNV : DecorationOperand<5273, 0, 0, [], [FragmentBarycentricNV]>;
-defm NonUniformEXT : DecorationOperand<5300, 0, 0, [], [ShaderNonUniformEXT]>;
-defm CountBuffer : DecorationOperand<5634, 0, 0, [], []>;
-defm UserSemantic : DecorationOperand<5635, 0, 0, [], []>;
-defm RestrictPointerEXT : DecorationOperand<5355, 0, 0, [], [PhysicalStorageBufferAddressesEXT]>;
-defm AliasedPointerEXT : DecorationOperand<5356, 0, 0, [], [PhysicalStorageBufferAddressesEXT]>;
-defm ReferencedIndirectlyINTEL : DecorationOperand<5602, 0, 0, [], [IndirectReferencesINTEL]>;
-defm ClobberINTEL : DecorationOperand<5607, 0, 0, [SPV_INTEL_inline_assembly], [AsmINTEL]>;
-defm SideEffectsINTEL : DecorationOperand<5608, 0, 0, [SPV_INTEL_inline_assembly], [AsmINTEL]>;
-defm ArgumentAttributeINTEL : DecorationOperand<6409, 0, 0, [], [FunctionPointersINTEL]>;
-defm CacheControlLoadINTEL : DecorationOperand<6442, 0, 0, [], [CacheControlsINTEL]>;
-defm CacheControlStoreINTEL : DecorationOperand<6443, 0, 0, [], [CacheControlsINTEL]>;
-defm HostAccessINTEL : DecorationOperand<6188, 0, 0, [], [GlobalVariableHostAccessINTEL]>;
-defm InitModeINTEL : DecorationOperand<6190, 0, 0, [], [GlobalVariableFPGADecorationsINTEL]>;
-defm ImplementInRegisterMapINTEL : DecorationOperand<6191, 0, 0, [], [GlobalVariableFPGADecorationsINTEL]>;
-defm FunctionRoundingModeINTEL : DecorationOperand<5822, 0, 0, [], [FunctionFloatControlINTEL]>;
-defm FunctionDenormModeINTEL : DecorationOperand<5823, 0, 0, [], [FunctionFloatControlINTEL]>;
-defm FunctionFloatingPointModeINTEL : DecorationOperand<6080, 0, 0, [], [FunctionFloatControlINTEL]>;
-defm AliasScopeINTEL : DecorationOperand<5914, 0, 0, [], [MemoryAccessAliasingINTEL]>;
-defm NoAliasINTEL : DecorationOperand<5915, 0, 0, [], [MemoryAccessAliasingINTEL]>;
-defm FPMaxErrorDecorationINTEL : DecorationOperand<6170, 0, 0, [], [FPMaxErrorINTEL]>;
+defm RelaxedPrecision : DecorationOperand<SPIRVDecorationRelaxedPrecision, 0, 0, [], [Shader]>;
+defm SpecId : DecorationOperand<SPIRVDecorationSpecId, 0, 0, [], [Shader, Kernel]>;
+defm Block : DecorationOperand<SPIRVDecorationBlock, 0, 0, [], [Shader]>;
+defm BufferBlock : DecorationOperand<SPIRVDecorationBufferBlock, 0, 0, [], [Shader]>;
+defm RowMajor : DecorationOperand<SPIRVDecorationRowMajor, 0, 0, [], [Matrix]>;
+defm ColMajor : DecorationOperand<SPIRVDecorationColMajor, 0, 0, [], [Matrix]>;
+defm ArrayStride : DecorationOperand<SPIRVDecorationArrayStride, 0, 0, [], [Shader]>;
+defm MatrixStride : DecorationOperand<SPIRVDecorationMatrixStride, 0, 0, [], [Matrix]>;
+defm GLSLShared : DecorationOperand<SPIRVDecorationGLSLShared, 0, 0, [], [Shader]>;
+defm GLSLPacked : DecorationOperand<SPIRVDecorationGLSLPacked, 0, 0, [], [Shader]>;
+defm CPacked : DecorationOperand<SPIRVDecorationCPacked, 0, 0, [], [Kernel]>;
+defm BuiltIn : DecorationOperand<SPIRVDecorationBuiltIn, 0, 0, [], []>;
+defm NoPerspective : DecorationOperand<SPIRVDecorationNoPerspective, 0, 0, [], [Shader]>;
+defm Flat : DecorationOperand<SPIRVDecorationFlat, 0, 0, [], [Shader]>;
+defm Patch : DecorationOperand<SPIRVDecorationPatch, 0, 0, [], [Tessellation]>;
+defm Centroid : DecorationOperand<SPIRVDecorationCentroid, 0, 0, [], [Shader]>;
+defm Sample : DecorationOperand<SPIRVDecorationSample, 0, 0, [], [SampleRateShading]>;
+defm Invariant : DecorationOperand<SPIRVDecorationInvariant, 0, 0, [], [Shader]>;
+defm Restrict : DecorationOperand<SPIRVDecorationRestrict, 0, 0, [], []>;
+defm Aliased : DecorationOperand<SPIRVDecorationAliased, 0, 0, [], []>;
+defm Volatile : DecorationOperand<SPIRVDecorationVolatile, 0, 0, [], []>;
+defm Constant : DecorationOperand<SPIRVDecorationConstant, 0, 0, [], [Kernel]>;
+defm Coherent : DecorationOperand<SPIRVDecorationCoherent, 0, 0, [], []>;
+defm NonWritable : DecorationOperand<SPIRVDecorationNonWritable, 0, 0, [], []>;
+defm NonReadable : DecorationOperand<SPIRVDecorationNonReadable, 0, 0, [], []>;
+defm Uniform : DecorationOperand<SPIRVDecorationUniform, 0, 0, [], [Shader]>;
+defm UniformId : DecorationOperand<SPIRVDecorationUniformId, 0, 0, [], [Shader]>;
+defm SaturatedConversion : DecorationOperand<SPIRVDecorationSaturatedConversion, 0, 0, [], [Kernel]>;
+defm Stream : DecorationOperand<SPIRVDecorationStream, 0, 0, [], [GeometryStreams]>;
+defm Location : DecorationOperand<SPIRVDecorationLocation, 0, 0, [], [Shader]>;
+defm Component : DecorationOperand<SPIRVDecorationComponent, 0, 0, [], [Shader]>;
+defm Index : DecorationOperand<SPIRVDecorationIndex, 0, 0, [], [Shader]>;
+defm Binding : DecorationOperand<SPIRVDecorationBinding, 0, 0, [], [Shader]>;
+defm DescriptorSet : DecorationOperand<SPIRVDecorationDescriptorSet, 0, 0, [], [Shader]>;
+defm Offset : DecorationOperand<SPIRVDecorationOffset, 0, 0, [], [Shader]>;
+defm XfbBuffer : DecorationOperand<SPIRVDecorationXfbBuffer, 0, 0, [], [TransformFeedback]>;
+defm XfbStride : DecorationOperand<SPIRVDecorationXfbStride, 0, 0, [], [TransformFeedback]>;
+defm FuncParamAttr : DecorationOperand<SPIRVDecorationFuncParamAttr, 0, 0, [], [Kernel]>;
+defm FPRoundingMode : DecorationOperand<SPIRVDecorationFPRoundingMode, 0, 0, [], []>;
+defm FPFastMathMode : DecorationOperand<SPIRVDecorationFPFastMathMode, 0, 0, [], [Kernel, FloatControls2]>;
+defm LinkageAttributes : DecorationOperand<SPIRVDecorationLinkageAttributes, 0, 0, [], [Linkage]>;
+defm NoContraction : DecorationOperand<SPIRVDecorationNoContraction, 0, 0, [], [Shader]>;
+defm InputAttachmentIndex : DecorationOperand<SPIRVDecorationInputAttachmentIndex, 0, 0, [], [InputAttachment]>;
+defm Alignment : DecorationOperand<SPIRVDecorationAlignment, 0, 0, [], [Kernel]>;
+defm MaxByteOffset : DecorationOperand<SPIRVDecorationMaxByteOffset, 0x10100, 0, [], [Addresses]>;
+defm AlignmentId : DecorationOperand<SPIRVDecorationAlignmentId, 0, 0, [], [Kernel]>;
+defm MaxByteOffsetId : DecorationOperand<SPIRVDecorationMaxByteOffsetId, 0, 0, [], [Addresses]>;
+defm NoSignedWrap : DecorationOperand<SPIRVDecorationNoSignedWrap, 0x10400, 0, [SPV_KHR_no_integer_wrap_decoration], []>;
+defm NoUnsignedWrap : DecorationOperand<SPIRVDecorationNoUnsignedWrap, 0x10400, 0, [SPV_KHR_no_integer_wrap_decoration], []>;
+defm ExplicitInterpAMD : DecorationOperand<SPIRVDecorationExplicitInterpAMD, 0, 0, [], []>;
+defm OverrideCoverageNV : DecorationOperand<SPIRVDecorationOverrideCoverageNV, 0, 0, [], [SampleMaskOverrideCoverageNV]>;
+defm PassthroughNV : DecorationOperand<SPIRVDecorationPassthroughNV, 0, 0, [], [GeometryShaderPassthroughNV]>;
+defm ViewportRelativeNV : DecorationOperand<SPIRVDecorationViewportRelativeNV, 0, 0, [], [ShaderViewportMaskNV]>;
+defm SecondaryViewportRelativeNV : DecorationOperand<SPIRVDecorationSecondaryViewportRelativeNV, 0, 0, [], [ShaderStereoViewNV]>;
+defm PerPrimitiveNV : DecorationOperand<SPIRVDecorationPerPrimitiveNV, 0, 0, [], [MeshShadingNV]>;
+defm PerViewNV : DecorationOperand<SPIRVDecorationPerViewNV, 0, 0, [], [MeshShadingNV]>;
+defm PerVertexNV : DecorationOperand<SPIRVDecorationPerVertexNV, 0, 0, [], [FragmentBarycentricNV]>;
+defm NonUniformEXT : DecorationOperand<SPIRVDecorationNonUniformEXT, 0, 0, [], [ShaderNonUniformEXT]>;
+defm CountBuffer : DecorationOperand<SPIRVDecorationCountBuffer, 0, 0, [], []>;
+defm UserSemantic : DecorationOperand<SPIRVDecorationUserSemantic, 0, 0, [], []>;
+defm RestrictPointerEXT : DecorationOperand<SPIRVDecorationRestrictPointerEXT, 0, 0, [], [PhysicalStorageBufferAddressesEXT]>;
+defm AliasedPointerEXT : DecorationOperand<SPIRVDecorationAliasedPointerEXT, 0, 0, [], [PhysicalStorageBufferAddressesEXT]>;
+defm ReferencedIndirectlyINTEL : DecorationOperand<SPIRVDecorationReferencedIndirectlyINTEL, 0, 0, [], [IndirectReferencesINTEL]>;
+defm ClobberINTEL : DecorationOperand<SPIRVDecorationClobberINTEL, 0, 0, [SPV_INTEL_inline_assembly], [AsmINTEL]>;
+defm SideEffectsINTEL : DecorationOperand<SPIRVDecorationSideEffectsINTEL, 0, 0, [SPV_INTEL_inline_assembly], [AsmINTEL]>;
+defm ArgumentAttributeINTEL : DecorationOperand<SPIRVDecorationArgumentAttributeINTEL, 0, 0, [], [FunctionPointersINTEL]>;
+defm CacheControlLoadINTEL : DecorationOperand<SPIRVDecorationCacheControlLoadINTEL, 0, 0, [], [CacheControlsINTEL]>;
+defm CacheControlStoreINTEL : DecorationOperand<SPIRVDecorationCacheControlStoreINTEL, 0, 0, [], [CacheControlsINTEL]>;
+defm HostAccessINTEL : DecorationOperand<SPIRVDecorationHostAccessINTEL, 0, 0, [], [GlobalVariableHostAccessINTEL]>;
+defm InitModeINTEL : DecorationOperand<SPIRVDecorationInitModeINTEL, 0, 0, [], [GlobalVariableFPGADecorationsINTEL]>;
+defm ImplementInRegisterMapINTEL : DecorationOperand<SPIRVDecorationImplementInRegisterMapINTEL, 0, 0, [], [GlobalVariableFPGADecorationsINTEL]>;
+defm FunctionRoundingModeINTEL : DecorationOperand<SPIRVDecorationFunctionRoundingModeINTEL, 0, 0, [], [FunctionFloatControlINTEL]>;
+defm FunctionDenormModeINTEL : DecorationOperand<SPIRVDecorationFunctionDenormModeINTEL, 0, 0, [], [FunctionFloatControlINTEL]>;
+defm FunctionFloatingPointModeINTEL : DecorationOperand<SPIRVDecorationFunctionFloatingPointModeINTEL, 0, 0, [], [FunctionFloatControlINTEL]>;
+defm AliasScopeINTEL : DecorationOperand<SPIRVDecorationAliasScopeINTEL, 0, 0, [], [MemoryAccessAliasingINTEL]>;
+defm NoAliasINTEL : DecorationOperand<SPIRVDecorationNoAliasINTEL, 0, 0, [], [MemoryAccessAliasingINTEL]>;
+defm FPMaxErrorDecorationINTEL : DecorationOperand<SPIRVDecorationFPMaxErrorDecorationINTEL, 0, 0, [], [FPMaxErrorINTEL]>;
 // Internal-only sentinel; intercepted by SPIRVModuleAnalysis, never emitted.
-defm AuxDataInstructionMetadata : DecorationOperand<0xFFFF, 0, 0, [], []>;
+defm AuxDataInstructionMetadata : DecorationOperand<SPIRVDecorationAuxDataInstructionMetadata, 0, 0, [], []>;
 
 //===----------------------------------------------------------------------===//
-// Multiclass used to define BuiltIn enum values and at the same time
-// SymbolicOperand entries with string mnemonics, versioning, extensions and
-// capabilities.
+// BuiltIn operands use shared enum values to define SymbolicOperand entries
+// with string mnemonics, versioning, extensions and capabilities.
 //===----------------------------------------------------------------------===//
 
+// GetBuiltins uses this GenericEnum to format its enum-valued table entries.
+// The C++ enum declaration is included from the public SPIRV.h header.
 def BuiltIn : GenericEnum, Operand<i32> {
   let FilterClass = "BuiltIn";
   let NameField = "Name";
   let ValueField = "Value";
-  let PrintMethod = !strconcat("printSymbolicOperand<OperandCategory::", FilterClass, "Operand>");
+  let PrintMethod = "printSymbolicOperand<OperandCategory::BuiltInOperand>";
 }
 
-class BuiltIn<string name, bits<32> value> {
-  string Name = name;
-  bits<32> Value = value;
-}
-
-multiclass BuiltInOperand<bits<32> value, bits<32> minVersion, bits<32> maxVersion, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
-  def NAME : BuiltIn<NAME, value>;
-  defm : SymbolicOperandWithRequirements<BuiltInOperand, value, NAME,
+multiclass BuiltInOperand<BuiltIn enumerant, bits<32> minVersion, bits<32> maxVersion, list<Extension> reqExtensions, list<Capability> reqCapabilities> {
+  defm : SymbolicOperandWithRequirements<BuiltInOperand, enumerant.Value, enumerant.Name,
                                          minVersion, maxVersion, reqExtensions,
                                          reqCapabilities, []>;
 }
 
-defm Position : BuiltInOperand<0, 0, 0, [], [Shader]>;
-defm PointSize : BuiltInOperand<1, 0, 0, [], [Shader]>;
-defm ClipDistanceVariable : BuiltInOperand<3, 0, 0, [], [ClipDistance]>;
-defm CullDistanceVariable : BuiltInOperand<4, 0, 0, [], [CullDistance]>;
-defm VertexId : BuiltInOperand<5, 0, 0, [], [Shader]>;
-defm InstanceId : BuiltInOperand<6, 0, 0, [], [Shader]>;
-defm PrimitiveId : BuiltInOperand<7, 0, 0, [], [Geometry, Tessellation, RayTracingNV]>;
-defm InvocationId : BuiltInOperand<8, 0, 0, [], [Geometry, Tessellation]>;
-defm Layer : BuiltInOperand<9, 0, 0, [], [Geometry]>;
-defm ViewportIndex : BuiltInOperand<10, 0, 0, [], [MultiViewport]>;
-defm TessLevelOuter : BuiltInOperand<11, 0, 0, [], [Tessellation]>;
-defm TessLevelInner : BuiltInOperand<12, 0, 0, [], [Tessellation]>;
-defm TessCoord : BuiltInOperand<13, 0, 0, [], [Tessellation]>;
-defm PatchVertices : BuiltInOperand<14, 0, 0, [], [Tessellation]>;
-defm FragCoord : BuiltInOperand<15, 0, 0, [], [Shader]>;
-defm PointCoord : BuiltInOperand<16, 0, 0, [], [Shader]>;
-defm FrontFacing : BuiltInOperand<17, 0, 0, [], [Shader]>;
-defm SampleId : BuiltInOperand<18, 0, 0, [], [SampleRateShading]>;
-defm SamplePosition : BuiltInOperand<19, 0, 0, [], [SampleRateShading]>;
-defm SampleMask : BuiltInOperand<20, 0, 0, [], [Shader]>;
-defm FragDepth : BuiltInOperand<22, 0, 0, [], [Shader]>;
-defm HelperInvocation : BuiltInOperand<23, 0, 0, [], [Shader]>;
-defm NumWorkgroups : BuiltInOperand<24, 0, 0, [], []>;
-defm WorkgroupSize : BuiltInOperand<25, 0, 0, [], []>;
-defm WorkgroupId : BuiltInOperand<26, 0, 0, [], []>;
-defm LocalInvocationId : BuiltInOperand<27, 0, 0, [], []>;
-defm GlobalInvocationId : BuiltInOperand<28, 0, 0, [], []>;
-defm LocalInvocationIndex : BuiltInOperand<29, 0, 0, [], []>;
-defm WorkDim : BuiltInOperand<30, 0, 0, [], [Kernel]>;
-defm GlobalSize : BuiltInOperand<31, 0, 0, [], [Kernel]>;
-defm EnqueuedWorkgroupSize : BuiltInOperand<32, 0, 0, [], [Kernel]>;
-defm GlobalOffset : BuiltInOperand<33, 0, 0, [], [Kernel]>;
-defm GlobalLinearId : BuiltInOperand<34, 0, 0, [], [Kernel]>;
-defm SubgroupSize : BuiltInOperand<36, 0, 0, [], [Kernel, GroupNonUniform, SubgroupBallotKHR]>;
-defm SubgroupMaxSize : BuiltInOperand<37, 0, 0, [], [Kernel]>;
-defm NumSubgroups : BuiltInOperand<38, 0, 0, [], [Kernel, GroupNonUniform]>;
-defm NumEnqueuedSubgroups : BuiltInOperand<39, 0, 0, [], [Kernel]>;
-defm SubgroupId : BuiltInOperand<40, 0, 0, [], [Kernel, GroupNonUniform]>;
-defm SubgroupLocalInvocationId : BuiltInOperand<41, 0, 0, [], [Kernel, GroupNonUniform, SubgroupBallotKHR]>;
-defm VertexIndex : BuiltInOperand<42, 0, 0, [], [Shader]>;
-defm InstanceIndex : BuiltInOperand<43, 0, 0, [], [Shader]>;
-defm SubgroupEqMask : BuiltInOperand<4416, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
-defm SubgroupGeMask : BuiltInOperand<4417, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
-defm SubgroupGtMask : BuiltInOperand<4418, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
-defm SubgroupLeMask : BuiltInOperand<4419, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
-defm SubgroupLtMask : BuiltInOperand<4420, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
-defm BaseVertex : BuiltInOperand<4424, 0, 0, [], [DrawParameters]>;
-defm BaseInstance : BuiltInOperand<4425, 0, 0, [], [DrawParameters]>;
-defm DrawIndex : BuiltInOperand<4426, 0, 0, [], [DrawParameters, MeshShadingNV]>;
-defm PrimitiveShadingRateKHR : BuiltInOperand<4432, 0, 0, [], [FragmentShadingRateKHR]>;
-defm ShadingRateKHR : BuiltInOperand<4444, 0, 0, [], [FragmentShadingRateKHR]>;
-defm DeviceIndex : BuiltInOperand<4438, 0, 0, [], [DeviceGroup]>;
-defm ViewIndex : BuiltInOperand<4440, 0, 0, [], [MultiView]>;
-defm BaryCoordNoPerspAMD : BuiltInOperand<4492, 0, 0, [], []>;
-defm BaryCoordNoPerspCentroidAMD : BuiltInOperand<4493, 0, 0, [], []>;
-defm BaryCoordNoPerspSampleAMD : BuiltInOperand<4494, 0, 0, [], []>;
-defm BaryCoordSmoothAMD : BuiltInOperand<4495, 0, 0, [], []>;
-defm BaryCoordSmoothCentroid : BuiltInOperand<4496, 0, 0, [], []>;
-defm BaryCoordSmoothSample : BuiltInOperand<4497, 0, 0, [], []>;
-defm BaryCoordPullModel : BuiltInOperand<4498, 0, 0, [], []>;
-defm FragStencilRefEXT : BuiltInOperand<5014, 0, 0, [], [StencilExportEXT]>;
-defm ViewportMaskNV : BuiltInOperand<5253, 0, 0, [], [ShaderViewportMaskNV, MeshShadingNV]>;
-defm SecondaryPositionNV : BuiltInOperand<5257, 0, 0, [], [ShaderStereoViewNV]>;
-defm SecondaryViewportMaskNV : BuiltInOperand<5258, 0, 0, [], [ShaderStereoViewNV]>;
-defm PositionPerViewNV : BuiltInOperand<5261, 0, 0, [], [PerViewAttributesNV, MeshShadingNV]>;
-defm ViewportMaskPerViewNV : BuiltInOperand<5262, 0, 0, [], [PerViewAttributesNV, MeshShadingNV]>;
-defm FullyCoveredEXT : BuiltInOperand<5264, 0, 0, [], [FragmentFullyCoveredEXT]>;
-defm TaskCountNV : BuiltInOperand<5274, 0, 0, [], [MeshShadingNV]>;
-defm PrimitiveCountNV : BuiltInOperand<5275, 0, 0, [], [MeshShadingNV]>;
-defm PrimitiveIndicesNV : BuiltInOperand<5276, 0, 0, [], [MeshShadingNV]>;
-defm ClipDistancePerViewNV : BuiltInOperand<5277, 0, 0, [], [MeshShadingNV]>;
-defm CullDistancePerViewNV : BuiltInOperand<5278, 0, 0, [], [MeshShadingNV]>;
-defm LayerPerViewNV : BuiltInOperand<5279, 0, 0, [], [MeshShadingNV]>;
-defm MeshViewCountNV : BuiltInOperand<5280, 0, 0, [], [MeshShadingNV]>;
-defm MeshViewIndices : BuiltInOperand<5281, 0, 0, [], [MeshShadingNV]>;
-defm BaryCoordNV : BuiltInOperand<5286, 0, 0, [], [FragmentBarycentricNV]>;
-defm BaryCoordNoPerspNV : BuiltInOperand<5287, 0, 0, [], [FragmentBarycentricNV]>;
-defm FragSizeEXT : BuiltInOperand<5292, 0, 0, [], [FragmentDensityEXT]>;
-defm FragInvocationCountEXT : BuiltInOperand<5293, 0, 0, [], [FragmentDensityEXT]>;
-defm LaunchIdNV : BuiltInOperand<5319, 0, 0, [], [RayTracingNV]>;
-defm LaunchSizeNV : BuiltInOperand<5320, 0, 0, [], [RayTracingNV]>;
-defm WorldRayOriginNV : BuiltInOperand<5321, 0, 0, [], [RayTracingNV]>;
-defm WorldRayDirectionNV : BuiltInOperand<5322, 0, 0, [], [RayTracingNV]>;
-defm ObjectRayOriginNV : BuiltInOperand<5323, 0, 0, [], [RayTracingNV]>;
-defm ObjectRayDirectionNV : BuiltInOperand<5324, 0, 0, [], [RayTracingNV]>;
-defm RayTminNV : BuiltInOperand<5325, 0, 0, [], [RayTracingNV]>;
-defm RayTmaxNV : BuiltInOperand<5326, 0, 0, [], [RayTracingNV]>;
-defm InstanceCustomIndexNV : BuiltInOperand<5327, 0, 0, [], [RayTracingNV]>;
-defm ObjectToWorldNV : BuiltInOperand<5330, 0, 0, [], [RayTracingNV]>;
-defm WorldToObjectNV : BuiltInOperand<5331, 0, 0, [], [RayTracingNV]>;
-defm HitTNV : BuiltInOperand<5332, 0, 0, [], [RayTracingNV]>;
-defm HitKindNV : BuiltInOperand<5333, 0, 0, [], [RayTracingNV]>;
-defm IncomingRayFlagsNV : BuiltInOperand<5351, 0, 0, [], [RayTracingNV]>;
+defm Position : BuiltInOperand<Position, 0, 0, [], [Shader]>;
+defm PointSize : BuiltInOperand<PointSize, 0, 0, [], [Shader]>;
+defm ClipDistanceVariable : BuiltInOperand<ClipDistanceVariable, 0, 0, [], [ClipDistance]>;
+defm CullDistanceVariable : BuiltInOperand<CullDistanceVariable, 0, 0, [], [CullDistance]>;
+defm VertexId : BuiltInOperand<VertexId, 0, 0, [], [Shader]>;
+defm InstanceId : BuiltInOperand<InstanceId, 0, 0, [], [Shader]>;
+defm PrimitiveId : BuiltInOperand<PrimitiveId, 0, 0, [], [Geometry, Tessellation, RayTracingNV]>;
+defm InvocationId : BuiltInOperand<InvocationId, 0, 0, [], [Geometry, Tessellation]>;
+defm Layer : BuiltInOperand<Layer, 0, 0, [], [Geometry]>;
+defm ViewportIndex : BuiltInOperand<ViewportIndex, 0, 0, [], [MultiViewport]>;
+defm TessLevelOuter : BuiltInOperand<TessLevelOuter, 0, 0, [], [Tessellation]>;
+defm TessLevelInner : BuiltInOperand<TessLevelInner, 0, 0, [], [Tessellation]>;
+defm TessCoord : BuiltInOperand<TessCoord, 0, 0, [], [Tessellation]>;
+defm PatchVertices : BuiltInOperand<PatchVertices, 0, 0, [], [Tessellation]>;
+defm FragCoord : BuiltInOperand<FragCoord, 0, 0, [], [Shader]>;
+defm PointCoord : BuiltInOperand<PointCoord, 0, 0, [], [Shader]>;
+defm FrontFacing : BuiltInOperand<FrontFacing, 0, 0, [], [Shader]>;
+defm SampleId : BuiltInOperand<SampleId, 0, 0, [], [SampleRateShading]>;
+defm SamplePosition : BuiltInOperand<SamplePosition, 0, 0, [], [SampleRateShading]>;
+defm SampleMask : BuiltInOperand<SampleMask, 0, 0, [], [Shader]>;
+defm FragDepth : BuiltInOperand<FragDepth, 0, 0, [], [Shader]>;
+defm HelperInvocation : BuiltInOperand<HelperInvocation, 0, 0, [], [Shader]>;
+defm NumWorkgroups : BuiltInOperand<NumWorkgroups, 0, 0, [], []>;
+defm WorkgroupSize : BuiltInOperand<WorkgroupSize, 0, 0, [], []>;
+defm WorkgroupId : BuiltInOperand<WorkgroupId, 0, 0, [], []>;
+defm LocalInvocationId : BuiltInOperand<LocalInvocationId, 0, 0, [], []>;
+defm GlobalInvocationId : BuiltInOperand<GlobalInvocationId, 0, 0, [], []>;
+defm LocalInvocationIndex : BuiltInOperand<LocalInvocationIndex, 0, 0, [], []>;
+defm WorkDim : BuiltInOperand<WorkDim, 0, 0, [], [Kernel]>;
+defm GlobalSize : BuiltInOperand<GlobalSize, 0, 0, [], [Kernel]>;
+defm EnqueuedWorkgroupSize : BuiltInOperand<EnqueuedWorkgroupSize, 0, 0, [], [Kernel]>;
+defm GlobalOffset : BuiltInOperand<GlobalOffset, 0, 0, [], [Kernel]>;
+defm GlobalLinearId : BuiltInOperand<GlobalLinearId, 0, 0, [], [Kernel]>;
+defm SubgroupSize : BuiltInOperand<SubgroupSize, 0, 0, [], [Kernel, GroupNonUniform, SubgroupBallotKHR]>;
+defm SubgroupMaxSize : BuiltInOperand<SubgroupMaxSize, 0, 0, [], [Kernel]>;
+defm NumSubgroups : BuiltInOperand<NumSubgroups, 0, 0, [], [Kernel, GroupNonUniform]>;
+defm NumEnqueuedSubgroups : BuiltInOperand<NumEnqueuedSubgroups, 0, 0, [], [Kernel]>;
+defm SubgroupId : BuiltInOperand<SubgroupId, 0, 0, [], [Kernel, GroupNonUniform]>;
+defm SubgroupLocalInvocationId : BuiltInOperand<SubgroupLocalInvocationId, 0, 0, [], [Kernel, GroupNonUniform, SubgroupBallotKHR]>;
+defm VertexIndex : BuiltInOperand<VertexIndex, 0, 0, [], [Shader]>;
+defm InstanceIndex : BuiltInOperand<InstanceIndex, 0, 0, [], [Shader]>;
+defm SubgroupEqMask : BuiltInOperand<SubgroupEqMask, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
+defm SubgroupGeMask : BuiltInOperand<SubgroupGeMask, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
+defm SubgroupGtMask : BuiltInOperand<SubgroupGtMask, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
+defm SubgroupLeMask : BuiltInOperand<SubgroupLeMask, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
+defm SubgroupLtMask : BuiltInOperand<SubgroupLtMask, 0, 0, [], [SubgroupBallotKHR, GroupNonUniformBallot]>;
+defm BaseVertex : BuiltInOperand<BaseVertex, 0, 0, [], [DrawParameters]>;
+defm BaseInstance : BuiltInOperand<BaseInstance, 0, 0, [], [DrawParameters]>;
+defm DrawIndex : BuiltInOperand<DrawIndex, 0, 0, [], [DrawParameters, MeshShadingNV]>;
+defm PrimitiveShadingRateKHR : BuiltInOperand<PrimitiveShadingRateKHR, 0, 0, [], [FragmentShadingRateKHR]>;
+defm ShadingRateKHR : BuiltInOperand<ShadingRateKHR, 0, 0, [], [FragmentShadingRateKHR]>;
+defm DeviceIndex : BuiltInOperand<DeviceIndex, 0, 0, [], [DeviceGroup]>;
+defm ViewIndex : BuiltInOperand<ViewIndex, 0, 0, [], [MultiView]>;
+defm BaryCoordNoPerspAMD : BuiltInOperand<BaryCoordNoPerspAMD, 0, 0, [], []>;
+defm BaryCoordNoPerspCentroidAMD : BuiltInOperand<BaryCoordNoPerspCentroidAMD, 0, 0, [], []>;
+defm BaryCoordNoPerspSampleAMD : BuiltInOperand<BaryCoordNoPerspSampleAMD, 0, 0, [], []>;
+defm BaryCoordSmoothAMD : BuiltInOperand<BaryCoordSmoothAMD, 0, 0, [], []>;
+defm BaryCoordSmoothCentroid : BuiltInOperand<BaryCoordSmoothCentroid, 0, 0, [], []>;
+defm BaryCoordSmoothSample : BuiltInOperand<BaryCoordSmoothSample, 0, 0, [], []>;
+defm BaryCoordPullModel : BuiltInOperand<BaryCoordPullModel, 0, 0, [], []>;
+defm FragStencilRefEXT : BuiltInOperand<FragStencilRefEXT, 0, 0, [], [StencilExportEXT]>;
+defm ViewportMaskNV : BuiltInOperand<ViewportMaskNV, 0, 0, [], [ShaderViewportMaskNV, MeshShadingNV]>;
+defm SecondaryPositionNV : BuiltInOperand<SecondaryPositionNV, 0, 0, [], [ShaderStereoViewNV]>;
+defm SecondaryViewportMaskNV : BuiltInOperand<SecondaryViewportMaskNV, 0, 0, [], [ShaderStereoViewNV]>;
+defm PositionPerViewNV : BuiltInOperand<PositionPerViewNV, 0, 0, [], [PerViewAttributesNV, MeshShadingNV]>;
+defm ViewportMaskPerViewNV : BuiltInOperand<ViewportMaskPerViewNV, 0, 0, [], [PerViewAttributesNV, MeshShadingNV]>;
+defm FullyCoveredEXT : BuiltInOperand<FullyCoveredEXT, 0, 0, [], [FragmentFullyCoveredEXT]>;
+defm TaskCountNV : BuiltInOperand<TaskCountNV, 0, 0, [], [MeshShadingNV]>;
+defm PrimitiveCountNV : BuiltInOperand<PrimitiveCountNV, 0, 0, [], [MeshShadingNV]>;
+defm PrimitiveIndicesNV : BuiltInOperand<PrimitiveIndicesNV, 0, 0, [], [MeshShadingNV]>;
+defm ClipDistancePerViewNV : BuiltInOperand<ClipDistancePerViewNV, 0, 0, [], [MeshShadingNV]>;
+defm CullDistancePerViewNV : BuiltInOperand<CullDistancePerViewNV, 0, 0, [], [MeshShadingNV]>;
+defm LayerPerViewNV : BuiltInOperand<LayerPerViewNV, 0, 0, [], [MeshShadingNV]>;
+defm MeshViewCountNV : BuiltInOperand<MeshViewCountNV, 0, 0, [], [MeshShadingNV]>;
+defm MeshViewIndices : BuiltInOperand<MeshViewIndices, 0, 0, [], [MeshShadingNV]>;
+defm BaryCoordNV : BuiltInOperand<BaryCoordNV, 0, 0, [], [FragmentBarycentricNV]>;
+defm BaryCoordNoPerspNV : BuiltInOperand<BaryCoordNoPerspNV, 0, 0, [], [FragmentBarycentricNV]>;
+defm FragSizeEXT : BuiltInOperand<FragSizeEXT, 0, 0, [], [FragmentDensityEXT]>;
+defm FragInvocationCountEXT : BuiltInOperand<FragInvocationCountEXT, 0, 0, [], [FragmentDensityEXT]>;
+defm LaunchIdNV : BuiltInOperand<LaunchIdNV, 0, 0, [], [RayTracingNV]>;
+defm LaunchSizeNV : BuiltInOperand<LaunchSizeNV, 0, 0, [], [RayTracingNV]>;
+defm WorldRayOriginNV : BuiltInOperand<WorldRayOriginNV, 0, 0, [], [RayTracingNV]>;
+defm WorldRayDirectionNV : BuiltInOperand<WorldRayDirectionNV, 0, 0, [], [RayTracingNV]>;
+defm ObjectRayOriginNV : BuiltInOperand<ObjectRayOriginNV, 0, 0, [], [RayTracingNV]>;
+defm ObjectRayDirectionNV : BuiltInOperand<ObjectRayDirectionNV, 0, 0, [], [RayTracingNV]>;
+defm RayTminNV : BuiltInOperand<RayTminNV, 0, 0, [], [RayTracingNV]>;
+defm RayTmaxNV : BuiltInOperand<RayTmaxNV, 0, 0, [], [RayTracingNV]>;
+defm InstanceCustomIndexNV : BuiltInOperand<InstanceCustomIndexNV, 0, 0, [], [RayTracingNV]>;
+defm ObjectToWorldNV : BuiltInOperand<ObjectToWorldNV, 0, 0, [], [RayTracingNV]>;
+defm WorldToObjectNV : BuiltInOperand<WorldToObjectNV, 0, 0, [], [RayTracingNV]>;
+defm HitTNV : BuiltInOperand<HitTNV, 0, 0, [], [RayTracingNV]>;
+defm HitKindNV : BuiltInOperand<HitKindNV, 0, 0, [], [RayTracingNV]>;
+defm IncomingRayFlagsNV : BuiltInOperand<IncomingRayFlagsNV, 0, 0, [], [RayTracingNV]>;
 
 //===----------------------------------------------------------------------===//
 // Multiclass used to define SelectionControl enum values and at the same time
@@ -2125,8 +2102,7 @@ class PackedVectorFormats<string name, bits<32> value> {
 }
 
 multiclass PackedVectorFormatsOperand<bits<32> value, list<Extension> reqExtensions> {
-  def NAME : BuiltIn<NAME, value>;
   defm : SymbolicOperandWithRequirements<PackedVectorFormatsOperand, value, NAME, 0, 0, reqExtensions, [], []>;
 }
 
-defm PackedVectorFormat4x8Bit : PackedVectorFormatsOperand<0, [SPV_KHR_integer_dot_product]>;
+defm PackedVectorFormat4x8Bit : PackedVectorFormatsOperand<PackedVectorFormat4x8Bit.Value, [SPV_KHR_integer_dot_product]>;

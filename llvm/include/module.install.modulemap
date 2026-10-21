@@ -3,6 +3,10 @@ module LLVM_Extern_CodeGenTypes_Gen {
   textual header "llvm/CodeGen/GenVT.inc"
 }
 
+module LLVM_Extern_BinaryFormat_SPIRV_Gen {
+  textual header "llvm/BinaryFormat/SPIRVEnums.inc"
+}
+
 module LLVM_Extern_Config_Def {
   textual header "llvm/Config/AsmParsers.def"
   textual header "llvm/Config/AsmPrinters.def"

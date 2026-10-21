@@ -37,6 +37,7 @@
 #include "llvm/ADT/ScopeExit.h"
 #include "llvm/ADT/SmallString.h"
 #include "llvm/ADT/SmallVector.h"
+#include "llvm/BinaryFormat/SPIRV.h"
 #include "llvm/Frontend/HLSL/HLSLResource.h"
 #include "llvm/Frontend/HLSL/RootSignatureMetadata.h"
 #include "llvm/Frontend/HLSL/SemanticSignaturePacking.h"
@@ -1103,21 +1104,22 @@ static void addSPIRVBuiltinDecoration(llvm::GlobalVariable *GV,
   SmallVector<Metadata *, 2> Decorations;
   Decorations.push_back(MDNode::get(
       Ctx,
-      {ConstantAsMetadata::get(B.getInt32(/* Spirv::Decoration::BuiltIn */ 11)),
+      {ConstantAsMetadata::get(B.getInt32(llvm::SPIRV::Decoration::BuiltIn)),
        ConstantAsMetadata::get(B.getInt32(BuiltIn))}));
   if (NeedsFlat)
-    Decorations.push_back(
-        MDNode::get(Ctx, {ConstantAsMetadata::get(
-                             B.getInt32(/* Spirv::Decoration::Flat */ 14))}));
+    Decorations.push_back(MDNode::get(
+        Ctx,
+        {ConstantAsMetadata::get(B.getInt32(llvm::SPIRV::Decoration::Flat))}));
   GV->addMetadata("spirv.Decorations", *MDNode::get(Ctx, Decorations));
 }
 
 static void addLocationDecoration(llvm::GlobalVariable *GV, unsigned Location) {
   LLVMContext &Ctx = GV->getContext();
   IRBuilder<> B(*GV->getParent());
-  MDNode *Operands =
-      MDNode::get(Ctx, {ConstantAsMetadata::get(B.getInt32(/* Location */ 30)),
-                        ConstantAsMetadata::get(B.getInt32(Location))});
+  MDNode *Operands = MDNode::get(
+      Ctx,
+      {ConstantAsMetadata::get(B.getInt32(llvm::SPIRV::Decoration::Location)),
+       ConstantAsMetadata::get(B.getInt32(Location))});
   MDNode *Decoration = MDNode::get(Ctx, {Operands});
   GV->addMetadata("spirv.Decorations", *Decoration);
 }
@@ -1142,15 +1144,16 @@ static bool inputRequiresFlatDecoration(llvm::Type *Ty) {
   return Ty->isIntegerTy() || Ty->isDoubleTy();
 }
 
-static llvm::Value *createSPIRVBuiltinLoad(IRBuilder<> &B, llvm::Module &M,
-                                           llvm::Type *Ty, const Twine &Name,
-                                           unsigned BuiltInID,
-                                           bool NeedsFlat = false) {
+static llvm::Value *
+createSPIRVBuiltinLoad(IRBuilder<> &B, llvm::Module &M, llvm::Type *Ty,
+                       const Twine &Name,
+                       llvm::SPIRV::BuiltIn::BuiltIn BuiltInID,
+                       unsigned InputAS, bool NeedsFlat = false) {
   auto *GV = new llvm::GlobalVariable(
       M, Ty, /* isConstant= */ true, llvm::GlobalValue::ExternalLinkage,
       /* Initializer= */ nullptr, Name, /* insertBefore= */ nullptr,
-      llvm::GlobalVariable::GeneralDynamicTLSModel,
-      /* AddressSpace */ 7, /* isExternallyInitialized= */ true);
+      llvm::GlobalVariable::GeneralDynamicTLSModel, InputAS,
+      /* isExternallyInitialized= */ true);
   addSPIRVBuiltinDecoration(GV, BuiltInID, NeedsFlat);
   GV->setVisibility(llvm::GlobalValue::HiddenVisibility);
   return B.CreateLoad(Ty, GV);
@@ -1158,12 +1161,13 @@ static llvm::Value *createSPIRVBuiltinLoad(IRBuilder<> &B, llvm::Module &M,
 
 static llvm::Value *createSPIRVLocationLoad(IRBuilder<> &B, llvm::Module &M,
                                             llvm::Type *Ty, unsigned Location,
-                                            StringRef Name, bool NeedsFlat) {
+                                            StringRef Name, unsigned InputAS,
+                                            bool NeedsFlat) {
   auto *GV = new llvm::GlobalVariable(
       M, Ty, /* isConstant= */ true, llvm::GlobalValue::ExternalLinkage,
       /* Initializer= */ nullptr, /* Name= */ Name, /* insertBefore= */ nullptr,
-      llvm::GlobalVariable::GeneralDynamicTLSModel,
-      /* AddressSpace */ 7, /* isExternallyInitialized= */ true);
+      llvm::GlobalVariable::GeneralDynamicTLSModel, InputAS,
+      /* isExternallyInitialized= */ true);
   GV->setVisibility(llvm::GlobalValue::HiddenVisibility);
 
   // Emit all decorations as a single `spirv.Decorations` node. Attaching
@@ -1171,14 +1175,14 @@ static llvm::Value *createSPIRVLocationLoad(IRBuilder<> &B, llvm::Module &M,
   // supported by the SPIR-V backend and results in all but one being dropped.
   LLVMContext &Ctx = GV->getContext();
   SmallVector<Metadata *, 2> Decorations;
-  Decorations.push_back(
-      MDNode::get(Ctx, {ConstantAsMetadata::get(
-                            B.getInt32(/* SPIRV::Decoration::Location */ 30)),
-                        ConstantAsMetadata::get(B.getInt32(Location))}));
+  Decorations.push_back(MDNode::get(
+      Ctx,
+      {ConstantAsMetadata::get(B.getInt32(llvm::SPIRV::Decoration::Location)),
+       ConstantAsMetadata::get(B.getInt32(Location))}));
   if (NeedsFlat)
-    Decorations.push_back(
-        MDNode::get(Ctx, {ConstantAsMetadata::get(
-                             B.getInt32(/* SPIRV::Decoration::Flat */ 14))}));
+    Decorations.push_back(MDNode::get(
+        Ctx,
+        {ConstantAsMetadata::get(B.getInt32(llvm::SPIRV::Decoration::Flat))}));
   GV->addMetadata("spirv.Decorations", *MDNode::get(Ctx, Decorations));
 
   return B.CreateLoad(Ty, GV);
@@ -1207,19 +1211,20 @@ llvm::Value *CGHLSLRuntime::emitSPIRVUserSemanticLoad(
       ShaderAttr->getType() == llvm::Triple::EnvironmentType::Pixel &&
       inputRequiresFlatDecoration(Type);
 
-  return createSPIRVLocationLoad(B, CGM.getModule(), Type, Location,
-                                 VariableName.str(), NeedsFlat);
+  return createSPIRVLocationLoad(
+      B, CGM.getModule(), Type, Location, VariableName.str(),
+      CGM.getContext().getTargetAddressSpace(LangAS::hlsl_input), NeedsFlat);
 }
 
 static void createSPIRVLocationStore(IRBuilder<> &B, llvm::Module &M,
                                      llvm::Value *Source, unsigned Location,
-                                     StringRef Name) {
+                                     StringRef Name, unsigned OutputAS) {
   auto *GV = new llvm::GlobalVariable(
       M, Source->getType(), /* isConstant= */ false,
       llvm::GlobalValue::ExternalLinkage,
       /* Initializer= */ nullptr, /* Name= */ Name, /* insertBefore= */ nullptr,
-      llvm::GlobalVariable::GeneralDynamicTLSModel,
-      /* AddressSpace */ 8, /* isExternallyInitialized= */ false);
+      llvm::GlobalVariable::GeneralDynamicTLSModel, OutputAS,
+      /* isExternallyInitialized= */ false);
   GV->setVisibility(llvm::GlobalValue::HiddenVisibility);
   addLocationDecoration(GV, Location);
   B.CreateStore(Source, GV);
@@ -1241,8 +1246,9 @@ void CGHLSLRuntime::emitSPIRVUserSemanticStore(
   llvm::ArrayType *AT = dyn_cast<llvm::ArrayType>(Source->getType());
   unsigned ElementCount = AT ? AT->getNumElements() : 1;
   SPIRVLastAssignedOutputSemanticLocation += ElementCount;
-  createSPIRVLocationStore(B, CGM.getModule(), Source, Location,
-                           VariableName.str());
+  createSPIRVLocationStore(
+      B, CGM.getModule(), Source, Location, VariableName.str(),
+      CGM.getContext().getTargetAddressSpace(LangAS::hlsl_output));
 }
 
 namespace {
@@ -1573,9 +1579,10 @@ llvm::Value *CGHLSLRuntime::emitSystemSemanticLoad(
            "FIXME: loading SV_Position is not yet implemented for this "
            "shader stage");
     if (CGM.getTarget().getTriple().isSPIRV())
-      return createSPIRVBuiltinLoad(B, CGM.getModule(), Type,
-                                    Semantic->getAttrName()->getName(),
-                                    /* BuiltIn::FragCoord */ 15);
+      return createSPIRVBuiltinLoad(
+          B, CGM.getModule(), Type, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::FragCoord,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_input));
     if (CGM.getTarget().getTriple().isDXIL())
       return emitDXILUserSemanticLoad(B, Type, Decl, Semantic, Index,
                                       Signature);
@@ -1585,9 +1592,10 @@ llvm::Value *CGHLSLRuntime::emitSystemSemanticLoad(
            "SV_VertexID is in an unavailable stage and should have been "
            "diagnosed by Sema");
     if (CGM.getTarget().getTriple().isSPIRV())
-      return createSPIRVBuiltinLoad(B, CGM.getModule(), Type,
-                                    Semantic->getAttrName()->getName(),
-                                    /* BuiltIn::VertexIndex */ 42);
+      return createSPIRVBuiltinLoad(
+          B, CGM.getModule(), Type, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::VertexIndex,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_input));
     if (CGM.getTarget().getTriple().isDXIL())
       return emitDXILUserSemanticLoad(B, Type, Decl, Semantic, Index,
                                       Signature);
@@ -1597,9 +1605,10 @@ llvm::Value *CGHLSLRuntime::emitSystemSemanticLoad(
            "SV_InstanceID is in an unavailable stage and should have been "
            "diagnosed by Sema");
     if (CGM.getTarget().getTriple().isSPIRV())
-      return createSPIRVBuiltinLoad(B, CGM.getModule(), Type,
-                                    Semantic->getAttrName()->getName(),
-                                    /* BuiltIn::InstanceIndex */ 43);
+      return createSPIRVBuiltinLoad(
+          B, CGM.getModule(), Type, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::InstanceIndex,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_input));
     if (CGM.getTarget().getTriple().isDXIL())
       return emitDXILUserSemanticLoad(B, Type, Decl, Semantic, Index,
                                       Signature);
@@ -1616,10 +1625,11 @@ llvm::Value *CGHLSLRuntime::emitSystemSemanticLoad(
            "shader stage");
     if (CGM.getTarget().getTriple().isSPIRV())
       // Non-float pixel inputs cannot be interpolated and must be Flat.
-      return createSPIRVBuiltinLoad(B, CGM.getModule(), Type,
-                                    Semantic->getAttrName()->getName(),
-                                    /* BuiltIn::ShadingRateKHR */ 4444,
-                                    inputRequiresFlatDecoration(Type));
+      return createSPIRVBuiltinLoad(
+          B, CGM.getModule(), Type, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::ShadingRateKHR,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_input),
+          inputRequiresFlatDecoration(Type));
     if (CGM.getTarget().getTriple().isDXIL())
       return emitDXILUserSemanticLoad(B, Type, Decl, Semantic, Index,
                                       Signature);
@@ -1634,13 +1644,14 @@ llvm::Value *CGHLSLRuntime::emitSystemSemanticLoad(
 
 static void createSPIRVBuiltinStore(IRBuilder<> &B, llvm::Module &M,
                                     llvm::Value *Source, const Twine &Name,
-                                    unsigned BuiltInID) {
+                                    llvm::SPIRV::BuiltIn::BuiltIn BuiltInID,
+                                    unsigned OutputAS) {
   auto *GV = new llvm::GlobalVariable(
       M, Source->getType(), /* isConstant= */ false,
       llvm::GlobalValue::ExternalLinkage,
       /* Initializer= */ nullptr, Name, /* insertBefore= */ nullptr,
-      llvm::GlobalVariable::GeneralDynamicTLSModel,
-      /* AddressSpace */ 8, /* isExternallyInitialized= */ false);
+      llvm::GlobalVariable::GeneralDynamicTLSModel, OutputAS,
+      /* isExternallyInitialized= */ false);
   addSPIRVBuiltinDecoration(GV, BuiltInID);
   GV->setVisibility(llvm::GlobalValue::HiddenVisibility);
   B.CreateStore(Source, GV);
@@ -1669,9 +1680,10 @@ void CGHLSLRuntime::emitSystemSemanticStore(
       return;
     }
     if (CGM.getTarget().getTriple().isSPIRV()) {
-      createSPIRVBuiltinStore(B, CGM.getModule(), Source,
-                              Semantic->getAttrName()->getName(),
-                              /* BuiltIn::Position */ 0);
+      createSPIRVBuiltinStore(
+          B, CGM.getModule(), Source, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::Position,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_output));
       return;
     }
     break;
@@ -1697,9 +1709,10 @@ void CGHLSLRuntime::emitSystemSemanticStore(
       return;
     }
     if (CGM.getTarget().getTriple().isSPIRV()) {
-      createSPIRVBuiltinStore(B, CGM.getModule(), Source,
-                              Semantic->getAttrName()->getName(),
-                              /* BuiltIn::PrimitiveShadingRateKHR */ 4432);
+      createSPIRVBuiltinStore(
+          B, CGM.getModule(), Source, Semantic->getAttrName()->getName(),
+          llvm::SPIRV::BuiltIn::PrimitiveShadingRateKHR,
+          CGM.getContext().getTargetAddressSpace(LangAS::hlsl_output));
       return;
     }
     break;

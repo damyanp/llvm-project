@@ -15,7 +15,25 @@ void test_missing_arguments(int* p) {
   // expected-error@-1 {{too many arguments to function call, expected 2, have 3}}
 }
 
+void test_valid_storage_classes(int *p) {
+  (void)__builtin_spirv_generic_cast_to_ptr_explicit(p, 4);
+  (void)__builtin_spirv_generic_cast_to_ptr_explicit(p, 5);
+  (void)__builtin_spirv_generic_cast_to_ptr_explicit(p, 7);
+}
+
 void test_wrong_flag_value(int* p) {
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, 0);
+  // expected-error@-1 {{invalid value for storage class argument}}
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, 1);
+  // expected-error@-1 {{invalid value for storage class argument}}
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, 3);
+  // expected-error@-1 {{invalid value for storage class argument}}
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, 8);
+  // expected-error@-1 {{invalid value for storage class argument}}
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, 5937);
+  // expected-error@-1 {{invalid value for storage class argument}}
+  __builtin_spirv_generic_cast_to_ptr_explicit(p, -1);
+  // expected-error@-1 {{invalid value for storage class argument}}
   __builtin_spirv_generic_cast_to_ptr_explicit(p, 14);
   // expected-error@-1 {{invalid value for storage class argument}}
 }

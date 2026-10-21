@@ -168,6 +168,7 @@ add_clang_library(clangCodeGen
   [["pch.h"]]
 
   DEPENDS
+  spirv_enums_gen
   vt_gen
   intrinsics_gen
   ClangDriverOptions

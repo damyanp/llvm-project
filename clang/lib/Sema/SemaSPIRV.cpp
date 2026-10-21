@@ -12,18 +12,8 @@
 #include "clang/Basic/TargetBuiltins.h"
 #include "clang/Basic/TargetInfo.h"
 #include "clang/Sema/Sema.h"
-
-// SPIR-V enumerants. Enums have only the required entries, see SPIR-V specs for
-// values.
-// FIXME: either use the SPIRV-Headers or generate a custom header using the
-// grammar (like done with MLIR).
-namespace spirv {
-enum class StorageClass : int {
-  Workgroup = 4,
-  CrossWorkgroup = 5,
-  Function = 7
-};
-}
+#include "llvm/BinaryFormat/SPIRV.h"
+#include "llvm/Support/ErrorHandling.h"
 
 namespace clang {
 
@@ -139,19 +129,19 @@ static bool checkGenericCastToPtr(Sema &SemaRef, CallExpr *Call) {
     }
   }
 
-  spirv::StorageClass StorageClass;
+  llvm::SPIRV::StorageClass::StorageClass StorageClass;
   if (std::optional<int> SCInt =
           processConstant32BitIntArgument(SemaRef, Call, 1);
       SCInt.has_value()) {
-    StorageClass = static_cast<spirv::StorageClass>(SCInt.value());
-    if (StorageClass != spirv::StorageClass::CrossWorkgroup &&
-        StorageClass != spirv::StorageClass::Workgroup &&
-        StorageClass != spirv::StorageClass::Function) {
+    if (*SCInt != llvm::SPIRV::StorageClass::CrossWorkgroup &&
+        *SCInt != llvm::SPIRV::StorageClass::Workgroup &&
+        *SCInt != llvm::SPIRV::StorageClass::Function) {
       SemaRef.Diag(Call->getArg(1)->getBeginLoc(),
                    diag::err_spirv_enum_not_valid)
           << 0 << Call->getArg(1)->getSourceRange();
       return true;
     }
+    StorageClass = static_cast<llvm::SPIRV::StorageClass::StorageClass>(*SCInt);
   } else {
     return true;
   }
@@ -160,18 +150,20 @@ static bool checkGenericCastToPtr(Sema &SemaRef, CallExpr *Call) {
   auto Qual = RT.getQualifiers();
   LangAS AddrSpace;
   switch (StorageClass) {
-  case spirv::StorageClass::CrossWorkgroup:
+  case llvm::SPIRV::StorageClass::CrossWorkgroup:
     AddrSpace =
         SemaRef.LangOpts.isSYCL() ? LangAS::sycl_global : LangAS::opencl_global;
     break;
-  case spirv::StorageClass::Workgroup:
+  case llvm::SPIRV::StorageClass::Workgroup:
     AddrSpace =
         SemaRef.LangOpts.isSYCL() ? LangAS::sycl_local : LangAS::opencl_local;
     break;
-  case spirv::StorageClass::Function:
+  case llvm::SPIRV::StorageClass::Function:
     AddrSpace = SemaRef.LangOpts.isSYCL() ? LangAS::sycl_private
                                           : LangAS::opencl_private;
     break;
+  default:
+    llvm_unreachable("Storage class was checked above");
   }
   Qual.setAddressSpace(AddrSpace);
   Call->setType(SemaRef.getASTContext().getPointerType(

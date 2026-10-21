@@ -12,6 +12,7 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/Transforms/IPO/InstrumentorVariables.inc @ONLY)
 
 add_subdirectory(Analysis)
+add_subdirectory(BinaryFormat)
 add_subdirectory(CodeGen)
 add_subdirectory(IR)
 add_subdirectory(Support)

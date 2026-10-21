@@ -103,6 +103,7 @@ add_clang_library(clangSema
   TypeLocBuilder.cpp
 
   DEPENDS
+  spirv_enums_gen
   ClangOpenCLBuiltinsImpl
   acc_gen
   omp_gen

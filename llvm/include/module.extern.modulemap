@@ -1,4 +1,5 @@
 module LLVM_Extern_CodeGenTypes_Gen {}
+module LLVM_Extern_BinaryFormat_SPIRV_Gen {}
 module LLVM_Extern_Config_Def {}
 module LLVM_Extern_IR_Attributes_Gen {}
 module LLVM_Extern_IR_Intrinsics_Gen {}

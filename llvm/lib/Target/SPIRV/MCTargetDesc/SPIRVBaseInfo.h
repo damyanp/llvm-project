@@ -19,6 +19,7 @@
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/StringRef.h"
 #include "llvm/ADT/StringTable.h"
+#include "llvm/BinaryFormat/SPIRV.h"
 #include "llvm/Support/VersionTuple.h"
 #include <string>
 
@@ -73,11 +74,6 @@ namespace ExecutionMode {
 #define GET_ExecutionMode_DECL
 #include "SPIRVGenTables.inc"
 } // namespace ExecutionMode
-
-namespace StorageClass {
-#define GET_StorageClass_DECL
-#include "SPIRVGenTables.inc"
-} // namespace StorageClass
 
 namespace Dim {
 #define GET_Dim_DECL
@@ -138,16 +134,6 @@ namespace FunctionParameterAttribute {
 #define GET_FunctionParameterAttribute_DECL
 #include "SPIRVGenTables.inc"
 } // namespace FunctionParameterAttribute
-
-namespace Decoration {
-#define GET_Decoration_DECL
-#include "SPIRVGenTables.inc"
-} // namespace Decoration
-
-namespace BuiltIn {
-#define GET_BuiltIn_DECL
-#include "SPIRVGenTables.inc"
-} // namespace BuiltIn
 
 namespace SelectionControl {
 #define GET_SelectionControl_DECL

@@ -26,5 +26,10 @@ add_llvm_target_unittest(SPIRVTests
   SPIRVSortBlocksTests.cpp
   SPIRVPartialOrderingVisitorTests.cpp
   SPIRVAPITest.cpp
+  SPIRVEnumsTest.cpp
   SPIRVUtilsTests.cpp
+
+  DEPENDS
+  spirv_enums_gen
+  SPIRVCommonTableGen
 )

@@ -1558,7 +1558,8 @@ if (NOT LLVM_INSTALL_TOOLCHAIN_ONLY)
   # Installing the headers needs to depend on generating any public
   # tablegen'd headers.
   add_custom_target(llvm-headers)
-  add_dependencies(llvm-headers intrinsics_gen omp_gen target_parser_gen)
+  add_dependencies(llvm-headers intrinsics_gen omp_gen target_parser_gen
+                   spirv_enums_gen)
   set_target_properties(llvm-headers PROPERTIES FOLDER "LLVM/Resources")
 
   if (NOT LLVM_ENABLE_IDE)

@@ -11,6 +11,9 @@ add_llvm_unittest(BinaryFormatTests
   MsgPackReaderTest.cpp
   MsgPackWriterTest.cpp
   SFrameTest.cpp
+  SPIRVTest.cpp
   TestFileMagic.cpp
-  )
 
+  DEPENDS
+  spirv_enums_gen
+  )
